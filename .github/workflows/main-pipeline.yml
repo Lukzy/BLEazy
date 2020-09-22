@@ -10,7 +10,6 @@ jobs:
     name: build-test-publish
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/upload-artifact@v2
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
@@ -24,6 +23,7 @@ jobs:
       - name: Publish
         run: dotnet publish --configuration Release --no-restore
       - name: Upload Artifact
+        uses: actions/upload-artifact@v2
         with:
           name: BLEazy.Examples
           path: /home/runner/work/BLEazy/BLEazy/BLEazy.Example/bin/Release/netcoreapp3.1/publish
