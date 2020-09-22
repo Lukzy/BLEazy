@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>BLEazy</id>
+    <version>0.0.1</version>
+    <title>BLEazy</title>
+    <authors>Lukas Kamber, Roman Scheidegger</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Lukzy/BLEazy</projectUrl>
+    <iconUrl>https://github.com/Lukzy/BLEazy/blob/master/Ressources/bleazy_logo.png?raw=true</iconUrl>
+    <description>BLEazy is a library to support creation of BLE peripherals on Linux using .NET Core.</description>
+    <copyright>Lukas Kamber, Roman Scheidegger</copyright>
+    <tags>BLE Bluetooth Linux</tags>
+  </metadata>
+</package>

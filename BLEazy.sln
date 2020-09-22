@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLEazy", "BLEazy\BLEazy.csproj", "{E9A5C252-21EF-4EB6-8B71-AFE8A3B1DFF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLEazy.Example", "BLEazy.Example\BLEazy.Example.csproj", "{6A488E02-CD91-4C7D-BBD5-F01CFD3C7FEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLEazy.Example", "BLEazy.Example\BLEazy.Example.csproj", "{6A488E02-CD91-4C7D-BBD5-F01CFD3C7FEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ressources", "Ressources", "{5DBB0B5A-AC2B-4E25-BB9A-512F3811F0C4}"
+	ProjectSection(SolutionItems) = preProject
+		Ressources\bleazy_logo.png = Ressources\bleazy_logo.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
