@@ -1,39 +1,37 @@
 name: Publish NuGet
+
 on:
   push:
     branches:
-      - master
+      - 'releases/**'
+          
 jobs:
-  publish:
-  
+  build:
     runs-on: ubuntu-latest
     
+    name: Publish to NuGet
     steps:
       - uses: actions/checkout@v2
         
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.301
+          dotnet-version: 3.1.x
      
-      - name: Install dependencies
-        run: dotnet restore
-        
+      - name: Restore
+        run: dotnet restore        
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: publish on version change
+      - name: Publish on version change
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:
           # Filepath of the project to be packaged, relative to root of repository
           PROJECT_FILE_PATH: BLEazy/BLEazy.csproj
-
           # Useful with external providers like Nerdbank.GitVersioning, ignores VERSION_FILE_PATH & VERSION_REGEX
-          VERSION_STATIC: 0.0.1
-          
+          VERSION_STATIC: 0.0.1          
           # API key to authenticate with NuGet server
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-
           # NuGet server uri hosting the packages, defaults to https://api.nuget.org
           NUGET_SOURCE: https://api.nuget.org
