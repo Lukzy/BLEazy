@@ -1,15 +1,13 @@
-name: Main-Pipeline
-
+name: main-pipeline
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build, test and publish
+    name: build-test-publish
     steps:
       - uses: actions/checkout@v2
       - uses: actions/upload-artifact@v2
@@ -18,13 +16,13 @@ jobs:
         with:
           dotnet-version: 3.1.x
       - name: Restore
-        run: dotnet restore      
+        run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal        
+        run: dotnet test --no-restore --verbosity normal
       - name: Publish
-        run: dotnet publish --configuration Release --no-restore      
+        run: dotnet publish --configuration Release --no-restore
       - name: Upload Artifact
         with:
           name: BLEazy.Examples
