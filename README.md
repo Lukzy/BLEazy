@@ -5,3 +5,5 @@
 BLEazy is a library to support creation of BLE peripherals on Linux using .NET Core.
 
 The provided API aims to be easy to use and minimizes the aspects of the underlying BlueZ or D-Bus communication.
+
+See the [Wiki](https://github.com/Lukzy/BLEazy/wiki) for further documentation and help.
