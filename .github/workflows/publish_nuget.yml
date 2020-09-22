@@ -5,8 +5,8 @@ on:
       - master
 jobs:
   publish:
-    name: build, pack & publish
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
         
