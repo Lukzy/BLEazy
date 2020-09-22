@@ -1,4 +1,4 @@
-name: Build & Test
+name: Build, Test & Publish
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+  
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +27,12 @@ jobs:
       
       - name: Test
         run: dotnet test --no-restore --verbosity normal
+        
+      - name: Publish
+        run: dotnet publish
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: BLEazy.Examples
+          path: /home/runner/work/BLEazy/BLEazy/BLEazy.Example/bin/Release/netcoreapp3.1/publish

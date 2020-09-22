@@ -5,6 +5,7 @@ on:
       - master
 jobs:
   publish:
+  
     runs-on: ubuntu-latest
     
     steps:
@@ -28,6 +29,9 @@ jobs:
           # Filepath of the project to be packaged, relative to root of repository
           PROJECT_FILE_PATH: BLEazy/BLEazy.csproj
 
+          # Useful with external providers like Nerdbank.GitVersioning, ignores VERSION_FILE_PATH & VERSION_REGEX
+          VERSION_STATIC: 0.0.1
+          
           # API key to authenticate with NuGet server
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
