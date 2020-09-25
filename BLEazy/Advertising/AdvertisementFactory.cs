@@ -7,13 +7,13 @@ namespace BLEazy.Advertising
     {
         public static LEAdvertisement CreateAdvertisement(ServerContext context)
         {
-            var sampleAdvertisement = new LEAdvertisementProperties
+            var advertisementProperties = new LEAdvertisementProperties
             {
                 Type = "peripheral",
                 LocalName = context.Configuration.LocalName
             };
 
-            var advertisement = new LEAdvertisement("/org/bluez/example/advertisement0", sampleAdvertisement);
+            var advertisement = new LEAdvertisement("/org/bluez/advertisement0", advertisementProperties);
             return advertisement;
         }
     }
