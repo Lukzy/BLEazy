@@ -1,12 +1,28 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using BLEazy.Advertising;
+using BLEazy.Core;
 
 namespace BLEazy
 {
     public class BluetoothManager
     {
-        public void Test()
+        private readonly AdvertisingManager _advertisingManager;
+
+        public BluetoothManager(ServerContext context)
         {
-            Console.WriteLine("Test works!");
+            context.Connection.ConnectAsync();
+
+            _advertisingManager = new AdvertisingManager(context);
+        }
+
+        public async Task StartAdvertisementAsync()
+        {
+            await _advertisingManager.RegisterAdvertisementAsync();
+        }
+
+        public async Task StopAdvertisement()
+        {
+            await _advertisingManager.UnregisterAdvertisementAsync();
         }
     }
 }
