@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Tmds.DBus;
+
+[assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
 
 namespace BLEazy.BlueZ.Advertising
 {
     [DBusInterface("org.bluez.LEAdvertisingManager1")]
-    public interface ILEAdvertisingManager : IDBusObject
+    internal interface ILEAdvertisingManager : IDBusObject
     {
         Task RegisterAdvertisementAsync(ObjectPath advertisement, IDictionary<string, object> options);
 

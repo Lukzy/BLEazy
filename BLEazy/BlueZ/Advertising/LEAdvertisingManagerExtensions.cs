@@ -1,8 +1,12 @@
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Tmds.DBus;
+
+[assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
 
 namespace BLEazy.BlueZ.Advertising
 {
-    public static class LEAdvertisingManagerExtensions
+    internal static class LEAdvertisingManagerExtensions
     {
         public static Task<byte> GetActiveInstancesAsync(this ILEAdvertisingManager advertisingManager)
         {

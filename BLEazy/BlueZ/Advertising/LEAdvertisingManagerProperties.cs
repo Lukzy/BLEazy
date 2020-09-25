@@ -1,9 +1,12 @@
-﻿using Tmds.DBus;
+﻿using System.Runtime.CompilerServices;
+using Tmds.DBus;
+
+[assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
 
 namespace BLEazy.BlueZ.Advertising
 {
     [Dictionary]
-    public class LEAdvertisingManagerProperties
+    internal class LEAdvertisingManagerProperties
     {
         public byte ActiveInstances { get; set; } = default;
 

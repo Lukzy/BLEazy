@@ -4,14 +4,18 @@ using Tmds.DBus;
 
 namespace BLEazy.Core
 {
-    public class DBusContext : IDisposable
+    public class ServerContext : IDisposable
     {
-        public DBusContext()
+        public ServerContext(BLEazyConfiguration configuration)
         {
+            Configuration = configuration;
+
             Connection = new Connection(Address.System);
         }
 
         public Connection Connection { get; }
+
+        public BLEazyConfiguration Configuration { get; }
 
         public void Dispose()
         {

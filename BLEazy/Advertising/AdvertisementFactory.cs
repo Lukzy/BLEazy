@@ -1,12 +1,19 @@
 ﻿using BLEazy.BlueZ.Advertising;
+using BLEazy.Core;
 
 namespace BLEazy.Advertising
 {
-    public static class AdvertisementFactory
+    internal static class AdvertisementFactory
     {
-        public static LEAdvertisement CreateAdvertisement()
+        public static LEAdvertisement CreateAdvertisement(ServerContext context)
         {
-            var advertisement = new LEAdvertisement("/org/bluez/example/advertisement0", null);
+            var sampleAdvertisement = new LEAdvertisementProperties
+            {
+                Type = "peripheral",
+                LocalName = context.Configuration.LocalName
+            };
+
+            var advertisement = new LEAdvertisement("/org/bluez/example/advertisement0", sampleAdvertisement);
             return advertisement;
         }
     }

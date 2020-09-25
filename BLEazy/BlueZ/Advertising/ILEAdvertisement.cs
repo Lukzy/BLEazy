@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Tmds.DBus;
+
+[assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
 
 namespace BLEazy.BlueZ.Advertising
 {
     [DBusInterface("org.bluez.LEAdvertisement1")]
-    public interface ILEAdvertisement : IDBusObject
+    internal interface ILEAdvertisement : IDBusObject
     {
         Task ReleaseAsync();
 

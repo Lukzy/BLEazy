@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Tmds.DBus;
 
 // ReSharper disable ConvertToAutoProperty
 // ReSharper disable InconsistentNaming
 
+[assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
+
 namespace BLEazy.BlueZ.Advertising
 {
+    //TODO: Test all properties! The following properties work (tested with nRF Connect v3.5.0): LocalName, ServiceUUIDs, Type (only peripheral), Appearance
+
     [Dictionary]
-    public class LEAdvertisementProperties
+    internal class LEAdvertisementProperties
     {
         private bool _IncludeTxPower;
 
@@ -22,6 +27,8 @@ namespace BLEazy.BlueZ.Advertising
         private string[] _SolicitUUIDs;
 
         private string _Type;
+
+        private ushort _Appearance;
 
         public string Type
         {
@@ -63,6 +70,12 @@ namespace BLEazy.BlueZ.Advertising
         {
             get => _LocalName;
             set => _LocalName = value;
+        }
+
+        public ushort Appearance
+        {
+            get => _Appearance;
+            set => _Appearance = value;
         }
     }
 }

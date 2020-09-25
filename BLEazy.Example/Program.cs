@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BLEazy.Advertising;
-using BLEazy.BlueZ.Advertising;
 using BLEazy.Core;
 
 namespace BLEazy.Example
@@ -12,23 +11,17 @@ namespace BLEazy.Example
         {
             Console.WriteLine("BLEazy Example");
 
-            using var context = new DBusContext();
-            await context.ConnectAsync();
-
-            var sampleAdvertisement = new LEAdvertisementProperties
+            var peripheralConfiguration = new BLEazyConfiguration
             {
-                Type = "peripheral",
-                ServiceUUIDs = new[]
-                {
-                    "12345678-1234-5678-1234-56789abcdef0"
-                },
-                LocalName = "A"
+                LocalName = "BLEazy"
             };
 
+            using var context = new ServerContext(peripheralConfiguration);
+            await context.ConnectAsync();
+
             var advertisingManager = new AdvertisingManager(context);
-            var advertisement = advertisingManager.CreateAdvertisement(sampleAdvertisement);
-            await advertisingManager.RegisterAdvertisementAsync(advertisement);
-                
+            await advertisingManager.RegisterAdvertisementAsync();
+
             Console.WriteLine("Press CTRL+C to quit");
             Console.ReadKey();
         }
