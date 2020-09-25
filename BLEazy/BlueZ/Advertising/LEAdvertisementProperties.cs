@@ -14,6 +14,7 @@ namespace BLEazy.BlueZ.Advertising
     [Dictionary]
     internal class LEAdvertisementProperties
     {
+        private ushort _Appearance;
         private bool _IncludeTxPower;
 
         private string _LocalName;
@@ -27,8 +28,6 @@ namespace BLEazy.BlueZ.Advertising
         private string[] _SolicitUUIDs;
 
         private string _Type;
-
-        private ushort _Appearance;
 
         public string Type
         {

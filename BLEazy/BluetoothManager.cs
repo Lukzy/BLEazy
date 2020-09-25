@@ -20,9 +20,9 @@ namespace BLEazy
             await _advertisingManager.RegisterAdvertisementAsync();
         }
 
-        public void StopAdvertisement()
+        public async Task StopAdvertisement()
         {
-            _advertisingManager.UnregisterAdvertisementAsync();
+            await _advertisingManager.UnregisterAdvertisementAsync();
         }
     }
 }
