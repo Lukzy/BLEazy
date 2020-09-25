@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLEazy.Core;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,13 @@ namespace BLEazy.Example
 
             var peripheralConfiguration = new BLEazyConfiguration
             {
-                LocalName = "BLEazy"
+                LocalName = "BLEazy",
+                Appearance = 0x1000,
+                ServiceUUIDs = new List<string>
+                {
+                    "0x1805",
+                    "0x180A"
+                }
             };
             using var context = new ServerContext(peripheralConfiguration, logger);
 

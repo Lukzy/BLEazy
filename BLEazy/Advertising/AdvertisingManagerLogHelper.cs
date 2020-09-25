@@ -43,7 +43,8 @@ namespace BLEazy.Advertising
             var supportedInstances = await _advertisingManager.GetSupportedInstancesAsync();
             var activeInstances = await _advertisingManager.GetActiveInstancesAsync();
             var totalAllowedInstances = supportedInstances + activeInstances;
-            _context.Logger.LogInformation($"Advertisement {objectPath} registered in BlueZ advertising manager. {activeInstances} of {totalAllowedInstances} advertisements used.");
+            _context.Logger.LogInformation(
+                $"Advertisement {objectPath} registered in BlueZ advertising manager. {activeInstances} of {totalAllowedInstances} advertisements used.");
         }
 
         public async Task LogUnregisteredBluezAdvertisement(ObjectPath objectPath)
@@ -51,7 +52,8 @@ namespace BLEazy.Advertising
             var supportedInstances = await _advertisingManager.GetSupportedInstancesAsync();
             var activeInstances = await _advertisingManager.GetActiveInstancesAsync();
             var totalAllowedInstances = supportedInstances + activeInstances;
-            _context.Logger.LogInformation($"Advertisement {objectPath} unregistered in BlueZ advertising manager. {activeInstances} of {totalAllowedInstances} advertisements used.");
+            _context.Logger.LogInformation(
+                $"Advertisement {objectPath} unregistered in BlueZ advertising manager. {activeInstances} of {totalAllowedInstances} advertisements used.");
         }
 
         public void LogSupportedIncludes(string[] supportedIncludes)

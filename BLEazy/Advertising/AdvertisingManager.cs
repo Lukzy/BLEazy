@@ -42,8 +42,7 @@ namespace BLEazy.Advertising
                 return;
             }
 
-            var advertisingManager = GetAdvertisingManager();
-            await advertisingManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
+            await GetAdvertisingManager().UnregisterAdvertisementAsync(_advertisement.ObjectPath);
             await _logHelper.LogUnregisteredBluezAdvertisement(_advertisement.ObjectPath);
 
             _context.Connection.UnregisterObject(_advertisement.ObjectPath);

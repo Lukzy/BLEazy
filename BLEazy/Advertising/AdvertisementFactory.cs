@@ -1,4 +1,5 @@
-﻿using BLEazy.BlueZ.Advertising;
+﻿using System.Linq;
+using BLEazy.BlueZ.Advertising;
 using BLEazy.Core;
 
 namespace BLEazy.Advertising
@@ -10,7 +11,9 @@ namespace BLEazy.Advertising
             var advertisementProperties = new LEAdvertisementProperties
             {
                 Type = "peripheral",
-                LocalName = context.Configuration.LocalName
+                LocalName = context.Configuration.LocalName,
+                Appearance = context.Configuration.Appearance,
+                ServiceUUIDs = context.Configuration.ServiceUUIDs.ToArray()
             };
 
             var advertisement = new LEAdvertisement("/org/bluez/advertisement0", advertisementProperties);

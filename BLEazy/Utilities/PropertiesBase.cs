@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BLEazy.Utilities;
 using Tmds.DBus;
 
-namespace BLEazy.Core
+namespace BLEazy.Utilities
 {
     public abstract class PropertiesBase<TV>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using BLEazy.Core;
+using BLEazy.Utilities;
 using Tmds.DBus;
 
 [assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
