@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BLEazy.BlueZ.Advertising;
 using BLEazy.Core;
-using Microsoft.Extensions.Logging;
 using Tmds.DBus;
 
 namespace BLEazy.Advertising
@@ -13,53 +10,40 @@ namespace BLEazy.Advertising
     public class AdvertisingManager
     {
         private readonly ServerContext _context;
+        private readonly AdvertisingManagerLogHelper _logHelper;
 
         public AdvertisingManager(ServerContext context)
         {
             _context = context;
+            _logHelper = new AdvertisingManagerLogHelper(GetAdvertisingManager(), _context);
         }
 
         public async Task RegisterAdvertisementAsync()
         {
             var advertisement = AdvertisementFactory.CreateAdvertisement(_context);
             await _context.Connection.RegisterObjectAsync(advertisement);
-            _context.Logger.LogInformation($"Advertisement object {advertisement.ObjectPath} registered in DBus System bus.");
+            _logHelper.LogRegisteredDBusAdvertisement(advertisement.ObjectPath);
 
-            var advertisingManager = GetAdvertisingManager();
-            
-            _context.Logger.LogInformation($"SupportedInstances: {await advertisingManager.GetSupportedInstancesAsync()}.");
-            _context.Logger.LogInformation($"ActiveInstances: {await advertisingManager.GetActiveInstancesAsync()}.");
-
-            await advertisingManager.RegisterAdvertisementAsync(((IDBusObject) advertisement).ObjectPath, new Dictionary<string, object>());
-            
-            _context.Logger.LogInformation($"SupportedInstances: {await advertisingManager.GetSupportedInstancesAsync()}.");
-            _context.Logger.LogInformation($"ActiveInstances: {await advertisingManager.GetActiveInstancesAsync()}.");
-            
-            _context.Logger.LogInformation($"Advertisement {advertisement.ObjectPath} registered in BlueZ advertising manager.");
+            await GetAdvertisingManager().RegisterAdvertisementAsync(((IDBusObject) advertisement).ObjectPath, new Dictionary<string, object>());
+            await _logHelper.LogRegisteredBluezAdvertisement(advertisement.ObjectPath);
         }
 
-        public void UnregisterAdvertisementAsync()
+        public async Task UnregisterAdvertisementAsync()
         {
             var advertisement = AdvertisementFactory.CreateAdvertisement(_context);
-            _context.Connection.UnregisterObject(advertisement);
-            _context.Logger.LogInformation($"Advertisement object {advertisement.ObjectPath} unregistered.");
+
+            var advertisingManager = GetAdvertisingManager();
+            await advertisingManager.UnregisterAdvertisementAsync(advertisement.ObjectPath);
+            await _logHelper.LogUnregisteredBluezAdvertisement(advertisement.ObjectPath);
+
+            _context.Connection.UnregisterObject(advertisement.ObjectPath);
+            _logHelper.LogUnregisteredDBusAdvertisement(advertisement.ObjectPath);
         }
 
         public async Task<IEnumerable<string>> GetSupportedIncludes()
         {
             var supportedIncludes = await GetAdvertisingManager().GetSupportedIncludesAsync();
-
-            var stringBuilder = new StringBuilder();
-            const string separator = ", ";
-            foreach (var supportedInclude in supportedIncludes)
-            {
-                stringBuilder.Append(supportedInclude);
-                stringBuilder.Append(separator);
-            }
-
-            stringBuilder.Remove(stringBuilder.Length - separator.Length, separator.Length);
-            _context.Logger.LogDebug($"SupportedIncludes: {stringBuilder}.");
-
+            _logHelper.LogSupportedIncludes(supportedIncludes);
             return supportedIncludes.ToList();
         }
 
