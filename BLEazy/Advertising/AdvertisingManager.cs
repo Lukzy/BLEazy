@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLEazy.BlueZ.Advertising;
 using BLEazy.Core;
-using Tmds.DBus;
 
 namespace BLEazy.Advertising
 {
@@ -11,6 +10,7 @@ namespace BLEazy.Advertising
     {
         private readonly ServerContext _context;
         private readonly AdvertisingManagerLogHelper _logHelper;
+        private LEAdvertisement _advertisement;
 
         public AdvertisingManager(ServerContext context)
         {
@@ -20,24 +20,37 @@ namespace BLEazy.Advertising
 
         public async Task RegisterAdvertisementAsync()
         {
-            var advertisement = AdvertisementFactory.CreateAdvertisement(_context);
-            await _context.Connection.RegisterObjectAsync(advertisement);
-            _logHelper.LogRegisteredDBusAdvertisement(advertisement.ObjectPath);
+            if (_advertisement != null)
+            {
+                _logHelper.LogAlreadyRegisteredAdvertisement();
+                return;
+            }
 
-            await GetAdvertisingManager().RegisterAdvertisementAsync(((IDBusObject) advertisement).ObjectPath, new Dictionary<string, object>());
-            await _logHelper.LogRegisteredBluezAdvertisement(advertisement.ObjectPath);
+            _advertisement = AdvertisementFactory.CreateAdvertisement(_context);
+            await _context.Connection.RegisterObjectAsync(_advertisement);
+            _logHelper.LogRegisteredDBusAdvertisement(_advertisement.ObjectPath);
+
+            await GetAdvertisingManager().RegisterAdvertisementAsync(_advertisement.ObjectPath, new Dictionary<string, object>());
+            await _logHelper.LogRegisteredBluezAdvertisement(_advertisement.ObjectPath);
         }
 
         public async Task UnregisterAdvertisementAsync()
         {
-            var advertisement = AdvertisementFactory.CreateAdvertisement(_context);
+            if (_advertisement == null)
+            {
+                _logHelper.LogNoRegisteredAdvertisement();
+                return;
+            }
 
             var advertisingManager = GetAdvertisingManager();
-            await advertisingManager.UnregisterAdvertisementAsync(advertisement.ObjectPath);
-            await _logHelper.LogUnregisteredBluezAdvertisement(advertisement.ObjectPath);
+            await advertisingManager.UnregisterAdvertisementAsync(_advertisement.ObjectPath);
+            await _logHelper.LogUnregisteredBluezAdvertisement(_advertisement.ObjectPath);
 
-            _context.Connection.UnregisterObject(advertisement.ObjectPath);
-            _logHelper.LogUnregisteredDBusAdvertisement(advertisement.ObjectPath);
+            _context.Connection.UnregisterObject(_advertisement.ObjectPath);
+            _logHelper.LogUnregisteredDBusAdvertisement(_advertisement.ObjectPath);
+
+            await _advertisement.ReleaseAsync();
+            _advertisement = null;
         }
 
         public async Task<IEnumerable<string>> GetSupportedIncludes()

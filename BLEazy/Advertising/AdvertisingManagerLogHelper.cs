@@ -18,18 +18,14 @@ namespace BLEazy.Advertising
             _context = context;
         }
 
-        public async Task LogRegisteredBluezAdvertisement(ObjectPath objectPath)
+        public void LogAlreadyRegisteredAdvertisement()
         {
-            var supportedInstances = await _advertisingManager.GetSupportedInstancesAsync();
-            var activeInstances = await _advertisingManager.GetActiveInstancesAsync();
-            _context.Logger.LogInformation($"Advertisement {objectPath} registered in BlueZ advertising manager. {activeInstances} of {supportedInstances} advertisements used.");
+            _context.Logger.LogError("Can't register advertisement because there is already a registered advertisement.");
         }
 
-        public async Task LogUnregisteredBluezAdvertisement(ObjectPath objectPath)
+        public void LogNoRegisteredAdvertisement()
         {
-            var supportedInstances = await _advertisingManager.GetSupportedInstancesAsync();
-            var activeInstances = await _advertisingManager.GetActiveInstancesAsync();
-            _context.Logger.LogInformation($"Advertisement {objectPath} unregistered in BlueZ advertising manager. {activeInstances} of {supportedInstances} advertisements used.");
+            _context.Logger.LogError("Can't unregister advertisement because there is no registered advertisement.");
         }
 
         public void LogRegisteredDBusAdvertisement(ObjectPath objectPath)
@@ -40,6 +36,22 @@ namespace BLEazy.Advertising
         public void LogUnregisteredDBusAdvertisement(ObjectPath objectPath)
         {
             _context.Logger.LogDebug($"Advertisement object {objectPath} unregistered from DBus System bus.");
+        }
+
+        public async Task LogRegisteredBluezAdvertisement(ObjectPath objectPath)
+        {
+            var supportedInstances = await _advertisingManager.GetSupportedInstancesAsync();
+            var activeInstances = await _advertisingManager.GetActiveInstancesAsync();
+            var totalAllowedInstances = supportedInstances + activeInstances;
+            _context.Logger.LogInformation($"Advertisement {objectPath} registered in BlueZ advertising manager. {activeInstances} of {totalAllowedInstances} advertisements used.");
+        }
+
+        public async Task LogUnregisteredBluezAdvertisement(ObjectPath objectPath)
+        {
+            var supportedInstances = await _advertisingManager.GetSupportedInstancesAsync();
+            var activeInstances = await _advertisingManager.GetActiveInstancesAsync();
+            var totalAllowedInstances = supportedInstances + activeInstances;
+            _context.Logger.LogInformation($"Advertisement {objectPath} unregistered in BlueZ advertising manager. {activeInstances} of {totalAllowedInstances} advertisements used.");
         }
 
         public void LogSupportedIncludes(string[] supportedIncludes)

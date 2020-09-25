@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BLEazy.Core;
 using Tmds.DBus;
@@ -14,9 +13,9 @@ namespace BLEazy.BlueZ.Advertising
         {
         }
 
-        public Task ReleaseAsync()
+        public async Task ReleaseAsync()
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask;
         }
     }
 }

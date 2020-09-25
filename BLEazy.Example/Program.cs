@@ -31,7 +31,7 @@ namespace BLEazy.Example
         {
             var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole(options =>
             {
-                options.Format = ConsoleLoggerFormat.Systemd;
+                options.Format = ConsoleLoggerFormat.Default;
             }));
             var logger = loggerFactory.CreateLogger("BLEazy");
             return logger;
