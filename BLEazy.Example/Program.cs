@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLEazy.Core;
 using BLEazy.GattTest;
@@ -9,7 +10,7 @@ namespace BLEazy.Example
 {
     public class Program
     {
-        public static void Main()
+        public static async Task Main()
         {
             var logger = CreateLogger();
             logger.LogInformation("BLEazy Example");
@@ -24,19 +25,20 @@ namespace BLEazy.Example
                 }
             };
 
-            Task.Run(
-                    async () =>
-                    {
-                        using var context = new ServerContext(peripheralConfiguration, logger);
-                        var bluetoothManager = new BluetoothManager(context);
+            using var context = new ServerContext(peripheralConfiguration, logger);
+            var bluetoothManager = new BluetoothManager(context);
+            var bluetoothServerTask = Task.Run(() => RunBluetoothServer(bluetoothManager, context));
 
-                        await bluetoothManager.StartAdvertisementAsync();
-                        await SampleGattApplication.RegisterGattApplication(context);
-                        await Task.Delay(-1);
+            Console.ReadKey();
 
-                        await bluetoothManager.StopAdvertisementAsync();
-                    })
-                .Wait();
+            bluetoothServerTask.Wait();
+            await bluetoothManager.StopAdvertisementAsync();
+        }
+
+        private static async Task RunBluetoothServer(BluetoothManager bluetoothManager, ServerContext context)
+        {
+            await bluetoothManager.StartAdvertisementAsync();
+            await SampleGattApplication.RegisterGattApplication(context);
         }
 
         private static ILogger CreateLogger()
