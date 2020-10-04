@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLEazy.Core;
+using BLEazy.Gatt;
 using BLEazy.GattTest.BlueZModel;
 using BLEazy.GattTest.Description;
 using Tmds.DBus;
+using GattApplication = BLEazy.GattTest.BlueZModel.GattApplication;
 
 namespace BLEazy.GattTest
 {

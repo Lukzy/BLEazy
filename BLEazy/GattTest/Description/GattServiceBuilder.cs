@@ -1,4 +1,6 @@
-﻿namespace BLEazy.GattTest.Description
+﻿using BLEazy.Gatt;
+
+namespace BLEazy.GattTest.Description
 {
     public class GattServiceBuilder
     {

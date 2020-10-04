@@ -26,11 +26,6 @@ namespace BLEazy.Core
             Connection.Dispose();
         }
 
-        public async void Connect()
-        {
-            await ConnectAsync();
-        }
-
         public async Task ConnectAsync()
         {
             await Connection.ConnectAsync();

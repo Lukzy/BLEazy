@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BLEazy.Advertising;
 using BLEazy.Core;
+using BLEazy.Gatt;
 using BLEazy.GattTest;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -10,7 +12,7 @@ namespace BLEazy.Example
 {
     public class Program
     {
-        public static async Task Main()
+        public static void Main()
         {
             var logger = CreateLogger();
             logger.LogInformation("BLEazy Example");
@@ -26,18 +28,28 @@ namespace BLEazy.Example
             };
 
             using var context = new ServerContext(peripheralConfiguration, logger);
-            var bluetoothManager = new BluetoothManager(context);
-            var bluetoothServerTask = Task.Run(() => RunBluetoothServer(bluetoothManager, context));
+            var bluetoothServerTask = Task.Run(() => RunBluetoothServer(context));
 
             Console.ReadKey();
 
             bluetoothServerTask.Wait();
-            await bluetoothManager.StopAdvertisementAsync();
         }
 
-        private static async Task RunBluetoothServer(BluetoothManager bluetoothManager, ServerContext context)
+        private static async Task RunBluetoothServer(ServerContext context)
         {
-            await bluetoothManager.StartAdvertisementAsync();
+            await context.ConnectAsync();
+
+            var advertisingManager = new AdvertisingManager(context);
+            await advertisingManager.RegisterAdvertisementAsync();
+
+            var application = new GattApplication
+            {
+                Services = new List<GattServiceDescription>()
+            };
+
+            var gattManager = new GattManager(context);
+            await gattManager.RegisterApplication(application);
+
             await SampleGattApplication.RegisterGattApplication(context);
         }
 

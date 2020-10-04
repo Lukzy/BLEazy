@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using BLEazy.Core;
+using BLEazy.Gatt;
 using BLEazy.GattTest.Description;
 
 namespace BLEazy.GattTest
@@ -12,7 +13,7 @@ namespace BLEazy.GattTest
         {
             var gattServiceDescription = new GattServiceDescription
             {
-                UUID = "12345678-1234-5678-1234-56789abcdef0",
+                UUID = new UUID("12345678-1234-5678-1234-56789abcdef0"),
                 Primary = true
             };
 
