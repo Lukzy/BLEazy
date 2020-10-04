@@ -5,18 +5,18 @@ namespace BLEazy.GattTest.Description
 {
     public class GattApplicationBuilder
     {
-        private readonly IList<GattServiceBuilder> _ServiceBuilders = new List<GattServiceBuilder>();
+        private readonly IList<GattServiceBuilder> _serviceBuilders = new List<GattServiceBuilder>();
 
         public GattServiceBuilder AddService(GattServiceDescription gattServiceDescription)
         {
             var gattServiceBuilder = new GattServiceBuilder(gattServiceDescription);
-            _ServiceBuilders.Add(gattServiceBuilder);
+            _serviceBuilders.Add(gattServiceBuilder);
             return gattServiceBuilder;
         }
 
         public IEnumerable<GattServiceDescription> BuildServiceDescriptions()
         {
-            return _ServiceBuilders.Select(s => s.ServiceDescription);
+            return _serviceBuilders.Select(s => s.ServiceDescription);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BLEazy.GattTest.BlueZModel
             {
                 UUID = serviceDescription.UUID,
                 Primary = serviceDescription.Primary,
-                Characteristics = new ObjectPath[0] 
+                Characteristics = new ObjectPath[0]
             };
         }
 

@@ -10,11 +10,11 @@ namespace BLEazy.GattTest
 {
     public class GattApplicationManager
     {
-        private readonly ServerContext _ServerContext;
+        private readonly ServerContext _serverContext;
 
         public GattApplicationManager(ServerContext serverContext)
         {
-            _ServerContext = serverContext;
+            _serverContext = serverContext;
         }
 
         public async Task RegisterGattApplication(IEnumerable<GattServiceDescription> gattServiceDescriptions)
@@ -53,14 +53,14 @@ namespace BLEazy.GattTest
 
         private async Task RegisterApplicationInBluez(string applicationObjectPath)
         {
-            var gattManager = _ServerContext.Connection.CreateProxy<IGattManager1>("org.bluez", "/org/bluez/hci0");
+            var gattManager = _serverContext.Connection.CreateProxy<IGattManager1>("org.bluez", "/org/bluez/hci0");
             await gattManager.RegisterApplicationAsync(new ObjectPath(applicationObjectPath), new Dictionary<string, object>());
         }
 
         private async Task<GattApplication> BuildGattApplication(string applicationObjectPath)
         {
             var application = new GattApplication(applicationObjectPath);
-            await _ServerContext.Connection.RegisterObjectAsync(application);
+            await _serverContext.Connection.RegisterObjectAsync(application);
             return application;
         }
 
@@ -69,7 +69,7 @@ namespace BLEazy.GattTest
         {
             var gattService1Properties = GattPropertiesFactory.CreateGattService(serviceDescription);
             var gattService = application.AddService(gattService1Properties);
-            await _ServerContext.Connection.RegisterObjectAsync(gattService);
+            await _serverContext.Connection.RegisterObjectAsync(gattService);
             return gattService;
         }
 
@@ -77,7 +77,7 @@ namespace BLEazy.GattTest
         {
             var gattCharacteristic1Properties = GattPropertiesFactory.CreateGattCharacteristic(characteristic);
             var gattCharacteristic = gattService.AddCharacteristic(gattCharacteristic1Properties, characteristic.CharacteristicSource);
-            await _ServerContext.Connection.RegisterObjectAsync(gattCharacteristic);
+            await _serverContext.Connection.RegisterObjectAsync(gattCharacteristic);
             return gattCharacteristic;
         }
 
@@ -86,7 +86,7 @@ namespace BLEazy.GattTest
         {
             var gattDescriptor1Properties = GattPropertiesFactory.CreateGattDescriptor(descriptor);
             var gattDescriptor = gattCharacteristic.AddDescriptor(gattDescriptor1Properties);
-            await _ServerContext.Connection.RegisterObjectAsync(gattDescriptor);
+            await _serverContext.Connection.RegisterObjectAsync(gattDescriptor);
         }
     }
 }

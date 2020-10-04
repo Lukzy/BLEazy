@@ -6,13 +6,13 @@ namespace BLEazy.GattTest.BlueZModel
 {
     internal class GattService : PropertiesBase<GattService1Properties>, IGattService1, IObjectManagerProperties
     {
-        private readonly IList<GattCharacteristic> _Characteristics = new List<GattCharacteristic>();
-
-        public IEnumerable<GattCharacteristic> Characteristics => _Characteristics;
+        private readonly IList<GattCharacteristic> _characteristics = new List<GattCharacteristic>();
 
         public GattService(string objectPath, GattService1Properties properties) : base(objectPath, properties)
         {
         }
+
+        public IEnumerable<GattCharacteristic> Characteristics => _characteristics;
 
         public IDictionary<string, IDictionary<string, object>> GetProperties()
         {
@@ -21,9 +21,15 @@ namespace BLEazy.GattTest.BlueZModel
                 {
                     "org.bluez.GattService1", new Dictionary<string, object>
                     {
-                        {"UUID", Properties.UUID},
-                        {"Primary", Properties.Primary},
-                        {"Characteristics", Characteristics.Select(c => c.ObjectPath).ToArray()}
+                        {
+                            "UUID", Properties.UUID
+                        },
+                        {
+                            "Primary", Properties.Primary
+                        },
+                        {
+                            "Characteristics", Characteristics.Select(c => c.ObjectPath).ToArray()
+                        }
                     }
                 }
             };
@@ -33,16 +39,16 @@ namespace BLEazy.GattTest.BlueZModel
         {
             characteristic.Service = ObjectPath;
             var gattCharacteristic = new GattCharacteristic(NextCharacteristicPath(), characteristic, characteristicSource);
-            _Characteristics.Add(gattCharacteristic);
+            _characteristics.Add(gattCharacteristic);
 
             Properties.Characteristics = Properties.Characteristics.Append(NextCharacteristicPath()).ToArray();
-            
+
             return gattCharacteristic;
         }
 
         private string NextCharacteristicPath()
         {
-            return ObjectPath + "/characteristic" + _Characteristics.Count;
+            return ObjectPath + "/characteristic" + _characteristics.Count;
         }
     }
 }

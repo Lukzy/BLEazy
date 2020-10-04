@@ -2,12 +2,12 @@
 {
     public class GattServiceBuilder
     {
-        public GattServiceDescription ServiceDescription { get; }
-
         public GattServiceBuilder(GattServiceDescription gattServiceServiceDescription)
         {
             ServiceDescription = gattServiceServiceDescription;
         }
+
+        public GattServiceDescription ServiceDescription { get; }
 
         public void WithCharacteristic(GattCharacteristicDescription gattCharacteristicDescription,
             GattDescriptorDescription[] gattDescriptorDescriptions)

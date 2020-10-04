@@ -10,7 +10,6 @@ namespace BLEazy.GattTest.BlueZModel
         public GattDescriptor(ObjectPath objectPath, GattDescriptor1Properties gattDescriptor1Properties)
             : base(objectPath, gattDescriptor1Properties)
         {
-
         }
 
         public Task<byte[]> ReadValueAsync()
@@ -20,14 +19,20 @@ namespace BLEazy.GattTest.BlueZModel
 
         public IDictionary<string, IDictionary<string, object>> GetProperties()
         {
-            return new Dictionary<string, IDictionary<string, object>>()
+            return new Dictionary<string, IDictionary<string, object>>
             {
                 {
                     "org.bluez.GattDescriptor1", new Dictionary<string, object>
                     {
-                        { "Characteristic", Properties.Characteristic },
-                        { "UUID", Properties.UUID },
-                        { "Flags", Properties.Flags }
+                        {
+                            "Characteristic", Properties.Characteristic
+                        },
+                        {
+                            "UUID", Properties.UUID
+                        },
+                        {
+                            "Flags", Properties.Flags
+                        }
                     }
                 }
             };

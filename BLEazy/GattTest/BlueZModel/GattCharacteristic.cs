@@ -10,23 +10,23 @@ namespace BLEazy.GattTest.BlueZModel
     internal class GattCharacteristic : PropertiesBase<GattCharacteristic1Properties>, IGattCharacteristic1,
         IObjectManagerProperties
     {
-        public IList<GattDescriptor> Descriptors { get; } = new List<GattDescriptor>();
-
-        private readonly ICharacteristicSource _CharacteristicSource;
+        private readonly ICharacteristicSource _characteristicSource;
 
         public GattCharacteristic(ObjectPath objectPath, GattCharacteristic1Properties properties, ICharacteristicSource characteristicSource) : base(objectPath, properties)
         {
-            _CharacteristicSource = characteristicSource;
+            _characteristicSource = characteristicSource;
         }
+
+        public IList<GattDescriptor> Descriptors { get; } = new List<GattDescriptor>();
 
         public Task<byte[]> ReadValueAsync(IDictionary<string, object> options)
         {
-            return _CharacteristicSource.ReadValueAsync();
+            return _characteristicSource.ReadValueAsync();
         }
 
         public Task WriteValueAsync(byte[] value, IDictionary<string, object> options)
         {
-            return _CharacteristicSource.WriteValueAsync(value);
+            return _characteristicSource.WriteValueAsync(value);
         }
 
         public Task StartNotifyAsync()
@@ -46,10 +46,18 @@ namespace BLEazy.GattTest.BlueZModel
                 {
                     "org.bluez.GattCharacteristic1", new Dictionary<string, object>
                     {
-                        {"Service", Properties.Service},
-                        {"UUID", Properties.UUID},
-                        {"Flags", Properties.Flags},
-                        {"Descriptors", Descriptors.Select(d => d.ObjectPath).ToArray()}
+                        {
+                            "Service", Properties.Service
+                        },
+                        {
+                            "UUID", Properties.UUID
+                        },
+                        {
+                            "Flags", Properties.Flags
+                        },
+                        {
+                            "Descriptors", Descriptors.Select(d => d.ObjectPath).ToArray()
+                        }
                     }
                 }
             };

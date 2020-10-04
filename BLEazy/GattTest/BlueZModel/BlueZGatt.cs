@@ -4,7 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Tmds.DBus;
 
-[assembly: InternalsVisibleTo(Tmds.DBus.Connection.DynamicAssemblyName)]
+[assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
+
 namespace BLEazy.GattTest.BlueZModel
 {
     [DBusInterface("org.bluez.GattService1")]
@@ -19,57 +20,21 @@ namespace BLEazy.GattTest.BlueZModel
     [Dictionary]
     internal class GattService1Properties
     {
-        private string _UUID = default (string);
-        public string UUID
-        {
-            get
-            {
-                return _UUID;
-            }
+        public string UUID { get; set; }
 
-            set
-            {
-                _UUID = (value);
-            }
-        }
+        public bool Primary { get; set; }
 
-        private bool _Primary = default (bool);
-        public bool Primary
-        {
-            get
-            {
-                return _Primary;
-            }
-
-            set
-            {
-                _Primary = (value);
-            }
-        }
-
-        private ObjectPath[] _Characteristics = default (ObjectPath[]);
-        public ObjectPath[] Characteristics
-        {
-            get
-            {
-                return _Characteristics;
-            }
-
-            set
-            {
-                _Characteristics = (value);
-            }
-        }
+        public ObjectPath[] Characteristics { get; set; }
     }
 
     [DBusInterface("org.bluez.GattCharacteristic1")]
-    interface IGattCharacteristic1 : IDBusObject
+    internal interface IGattCharacteristic1 : IDBusObject
     {
-        Task<byte[]> ReadValueAsync(IDictionary<string, object> Options);
-        Task WriteValueAsync(byte[] Value, IDictionary<string, object> Options);
+        Task<byte[]> ReadValueAsync(IDictionary<string, object> options);
+        Task WriteValueAsync(byte[] value, IDictionary<string, object> options);
         Task StartNotifyAsync();
         Task StopNotifyAsync();
-        Task<Object> GetAsync(string prop);
+        Task<object> GetAsync(string prop);
         Task<GattCharacteristic1Properties> GetAllAsync();
         Task SetAsync(string prop, object val);
         Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler);
@@ -78,79 +43,19 @@ namespace BLEazy.GattTest.BlueZModel
     [Dictionary]
     public class GattCharacteristic1Properties
     {
-        private string _UUID = default (string);
-        public string UUID
-        {
-            get
-            {
-                return _UUID;
-            }
+        public string UUID { get; set; }
 
-            set
-            {
-                _UUID = (value);
-            }
-        }
+        public ObjectPath Service { get; set; }
 
-        private ObjectPath _Service = default (ObjectPath);
-        public ObjectPath Service
-        {
-            get
-            {
-                return _Service;
-            }
+        public byte[] Value { get; set; } = default;
 
-            set
-            {
-                _Service = (value);
-            }
-        }
+        public bool Notifying { get; set; } = default;
 
-        private byte[] _Value = default (byte[]);
-        public byte[] Value
-        {
-            get
-            {
-                return _Value;
-            }
-
-            set
-            {
-                _Value = (value);
-            }
-        }
-
-        private bool _Notifying = default (bool);
-        public bool Notifying
-        {
-            get
-            {
-                return _Notifying;
-            }
-
-            set
-            {
-                _Notifying = (value);
-            }
-        }
-
-        private string[] _Flags = default (string[]);
-        public string[] Flags
-        {
-            get
-            {
-                return _Flags;
-            }
-
-            set
-            {
-                _Flags = (value);
-            }
-        }
+        public string[] Flags { get; set; }
     }
 
     [DBusInterface("org.bluez.GattDescriptor1")]
-    interface IGattDescriptor1 : IDBusObject
+    internal interface IGattDescriptor1 : IDBusObject
     {
         Task<byte[]> ReadValueAsync();
         Task<object> GetAsync(string prop);
@@ -162,65 +67,17 @@ namespace BLEazy.GattTest.BlueZModel
     [Dictionary]
     public class GattDescriptor1Properties
     {
-        private string _UUID = default (string);
-        public string UUID
-        {
-            get
-            {
-                return _UUID;
-            }
+        public string UUID { get; set; }
 
-            set
-            {
-                _UUID = (value);
-            }
-        }
+        public ObjectPath Characteristic { get; set; }
 
-        private ObjectPath _Characteristic = default (ObjectPath);
-        public ObjectPath Characteristic
-        {
-            get
-            {
-                return _Characteristic;
-            }
+        public byte[] Value { get; set; }
 
-            set
-            {
-                _Characteristic = (value);
-            }
-        }
-
-        private byte[] _Value = default (byte[]);
-        public byte[] Value
-        {
-            get
-            {
-                return _Value;
-            }
-
-            set
-            {
-                _Value = (value);
-            }
-        }
-
-        private string[] _Flags = default (string[]);
-        public string[] Flags
-        {
-            get
-            {
-                return _Flags;
-            }
-
-            set
-            {
-                _Flags = (value);
-            }
-        }
+        public string[] Flags { get; set; }
     }
 
     [DBusInterface("org.bluez.LEAdvertisement1")]
-    interface ILEAdvertisement1 : IDBusObject
+    internal interface ILEAdvertisement1 : IDBusObject
     {
         Task ReleaseAsync();
         Task<T> GetAsync<T>(string prop);
@@ -230,100 +87,51 @@ namespace BLEazy.GattTest.BlueZModel
     }
 
     [Dictionary]
-    class LEAdvertisement1Properties
+    internal class LEAdvertisement1Properties
     {
-        private string _Type = default (string);
-        public string Type
-        {
-            get
-            {
-                return _Type;
-            }
+        public string Type { get; set; } = default;
 
-            set
-            {
-                _Type = (value);
-            }
-        }
+        public string[] ServiceUUIDs { get; set; } = default;
 
-        private string[] _ServiceUUIDs = default (string[]);
-        public string[] ServiceUUIDs
-        {
-            get
-            {
-                return _ServiceUUIDs;
-            }
+        public IDictionary<string, object> ManufacturerData { get; set; } = default;
 
-            set
-            {
-                _ServiceUUIDs = (value);
-            }
-        }
+        public string[] SolicitUUIDs { get; set; } = default;
 
-        private IDictionary<string, object> _ManufacturerData = default (IDictionary<string, object>);
-        public IDictionary<string, object> ManufacturerData
-        {
-            get
-            {
-                return _ManufacturerData;
-            }
+        public IDictionary<string, object> ServiceData { get; set; } = default;
 
-            set
-            {
-                _ManufacturerData = (value);
-            }
-        }
-
-        private string[] _SolicitUUIDs = default (string[]);
-        public string[] SolicitUUIDs
-        {
-            get
-            {
-                return _SolicitUUIDs;
-            }
-
-            set
-            {
-                _SolicitUUIDs = (value);
-            }
-        }
-
-        private IDictionary<string, object> _ServiceData = default (IDictionary<string, object>);
-        public IDictionary<string, object> ServiceData
-        {
-            get
-            {
-                return _ServiceData;
-            }
-
-            set
-            {
-                _ServiceData = (value);
-            }
-        }
-
-        private bool _IncludeTxPower = default (bool);
-        public bool IncludeTxPower
-        {
-            get
-            {
-                return _IncludeTxPower;
-            }
-
-            set
-            {
-                _IncludeTxPower = (value);
-            }
-        }
+        public bool IncludeTxPower { get; set; } = default;
     }
 
-    static class LEAdvertisement1Extensions
+    internal static class LEAdvertisement1Extensions
     {
-        public static Task<string> GetTypeAsync(this ILEAdvertisement1 o) => o.GetAsync<string>("Type");
-        public static Task<string[]> GetServiceUUIDsAsync(this ILEAdvertisement1 o) => o.GetAsync<string[]>("ServiceUUIDs");
-        public static Task<IDictionary<string, object>> GetManufacturerDataAsync(this ILEAdvertisement1 o) => o.GetAsync<IDictionary<string, object>>("ManufacturerData");
-        public static Task<string[]> GetSolicitUUIDsAsync(this ILEAdvertisement1 o) => o.GetAsync<string[]>("SolicitUUIDs");
-        public static Task<IDictionary<string, object>> GetServiceDataAsync(this ILEAdvertisement1 o) => o.GetAsync<IDictionary<string, object>>("ServiceData");
-        public static Task<bool> GetIncludeTxPowerAsync(this ILEAdvertisement1 o) => o.GetAsync<bool>("IncludeTxPower");
+        public static Task<string> GetTypeAsync(this ILEAdvertisement1 o)
+        {
+            return o.GetAsync<string>("Type");
+        }
+
+        public static Task<string[]> GetServiceUUIDsAsync(this ILEAdvertisement1 o)
+        {
+            return o.GetAsync<string[]>("ServiceUUIDs");
+        }
+
+        public static Task<IDictionary<string, object>> GetManufacturerDataAsync(this ILEAdvertisement1 o)
+        {
+            return o.GetAsync<IDictionary<string, object>>("ManufacturerData");
+        }
+
+        public static Task<string[]> GetSolicitUUIDsAsync(this ILEAdvertisement1 o)
+        {
+            return o.GetAsync<string[]>("SolicitUUIDs");
+        }
+
+        public static Task<IDictionary<string, object>> GetServiceDataAsync(this ILEAdvertisement1 o)
+        {
+            return o.GetAsync<IDictionary<string, object>>("ServiceData");
+        }
+
+        public static Task<bool> GetIncludeTxPowerAsync(this ILEAdvertisement1 o)
+        {
+            return o.GetAsync<bool>("IncludeTxPower");
+        }
     }
 }

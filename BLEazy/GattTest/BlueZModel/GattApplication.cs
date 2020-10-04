@@ -7,7 +7,7 @@ namespace BLEazy.GattTest.BlueZModel
     [DBusInterface("org.freedesktop.DBus.ObjectManager")]
     internal class GattApplication : IObjectManager
     {
-        private readonly IList<GattService> _Services = new List<GattService>();
+        private readonly IList<GattService> _services = new List<GattService>();
 
         public GattApplication(ObjectPath objectPath)
         {
@@ -20,7 +20,7 @@ namespace BLEazy.GattTest.BlueZModel
         {
             IDictionary<ObjectPath, IDictionary<string, IDictionary<string, object>>> result =
                 new Dictionary<ObjectPath, IDictionary<string, IDictionary<string, object>>>();
-            foreach (var service in _Services)
+            foreach (var service in _services)
             {
                 result[service.ObjectPath] = service.GetProperties();
                 foreach (var characteristic in service.Characteristics)
@@ -38,9 +38,9 @@ namespace BLEazy.GattTest.BlueZModel
 
         public GattService AddService(GattService1Properties gattService)
         {
-            var servicePath = ObjectPath + "/service" + _Services.Count;
+            var servicePath = ObjectPath + "/service" + _services.Count;
             var service = new GattService(servicePath, gattService);
-            _Services.Add(service);
+            _services.Add(service);
             return service;
         }
     }

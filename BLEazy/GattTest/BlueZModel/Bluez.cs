@@ -5,15 +5,16 @@ using Tmds.DBus;
 namespace BLEazy.GattTest.BlueZModel
 {
     [DBusInterface("org.freedesktop.DBus.ObjectManager")]
-    interface IObjectManager : IDBusObject
+    internal interface IObjectManager : IDBusObject
     {
         Task<IDictionary<ObjectPath, IDictionary<string, IDictionary<string, object>>>> GetManagedObjectsAsync();
     }
-    
+
     [DBusInterface("org.bluez.GattManager1")]
-    interface IGattManager1 : IDBusObject
+    internal interface IGattManager1 : IDBusObject
     {
-        Task RegisterApplicationAsync(ObjectPath Application, IDictionary<string, object> Options);
-        Task UnregisterApplicationAsync(ObjectPath Application);
+        Task RegisterApplicationAsync(ObjectPath application, IDictionary<string, object> options);
+
+        Task UnregisterApplicationAsync(ObjectPath application);
     }
 }

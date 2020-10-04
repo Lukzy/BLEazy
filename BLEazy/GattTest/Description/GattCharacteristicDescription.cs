@@ -4,9 +4,9 @@ namespace BLEazy.GattTest.Description
 {
     public class GattCharacteristicDescription
     {
-        private readonly IList<GattDescriptorDescription> _Descriptors = new List<GattDescriptorDescription>();
+        private readonly IList<GattDescriptorDescription> _descriptors = new List<GattDescriptorDescription>();
 
-        public IEnumerable<GattDescriptorDescription> Descriptors => _Descriptors;
+        public IEnumerable<GattDescriptorDescription> Descriptors => _descriptors;
 
         public ICharacteristicSource CharacteristicSource { get; set; }
 
@@ -15,7 +15,7 @@ namespace BLEazy.GattTest.Description
 
         public void AddDescriptor(GattDescriptorDescription gattDescriptorDescription)
         {
-            _Descriptors.Add(gattDescriptorDescription);
+            _descriptors.Add(gattDescriptorDescription);
         }
     }
 }
