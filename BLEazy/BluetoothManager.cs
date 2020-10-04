@@ -10,7 +10,7 @@ namespace BLEazy
 
         public BluetoothManager(ServerContext context)
         {
-            context.Connection.ConnectAsync();
+            context.Connect();
 
             _advertisingManager = new AdvertisingManager(context);
         }
