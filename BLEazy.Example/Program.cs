@@ -31,7 +31,7 @@ namespace BLEazy.Example
 
             Console.ReadKey();
 
-            await bluetoothManager.StopAdvertisement();
+            await bluetoothManager.StopAdvertisementAsync();
         }
 
         private static ILogger CreateLogger()
