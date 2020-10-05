@@ -12,7 +12,7 @@ namespace BLEazy.Core
 
         private readonly Connection _connection;
 
-        public ServerContext(BLEazyConfiguration configuration, ILogger logger)
+        public ServerContext(ServerConfiguration configuration, ILogger logger)
         {
             Configuration = configuration;
             Logger = logger;
@@ -20,7 +20,7 @@ namespace BLEazy.Core
             _connection = new Connection(Address.System);
         }
 
-        public BLEazyConfiguration Configuration { get; }
+        public ServerConfiguration Configuration { get; }
 
         public ILogger Logger { get; }
 

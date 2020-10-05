@@ -2,7 +2,7 @@
 
 namespace BLEazy.Core
 {
-    public class BLEazyConfiguration
+    public class ServerConfiguration
     {
         public string Alias { get; set; }
 
