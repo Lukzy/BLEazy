@@ -19,7 +19,7 @@ namespace BLEazy.Example
 
             var peripheralConfiguration = new BLEazyConfiguration
             {
-                LocalName = "BLEazy",
+                Alias = "BLEazy",
                 Appearance = 0x1000,
                 ServiceUUIDs = new List<string>
                 {
@@ -38,6 +38,21 @@ namespace BLEazy.Example
         private static async Task RunBluetoothServer(ServerContext context)
         {
             await context.ConnectAsync();
+            
+            var adapter = context.CreateProxy<IAdapter1>();
+            var name = await adapter.GetNameAsync();
+            var alias = await adapter.GetAliasAsync();
+            context.Logger.LogWarning($"Name = <{name}> - Alias = <{alias}>");
+            await adapter.SetAliasAsync("TestAlias55");
+
+            var test = await adapter.GetAllAsync();
+            var name3 = await adapter.GetNameAsync();
+            var alias3 = await adapter.GetAliasAsync();
+            context.Logger.LogWarning($"Name = <{name3}> - Alias = <{alias3}> - Alias = <{test.Alias}>");
+            
+            var name2 = await adapter.GetNameAsync();
+            var alias2 = await adapter.GetAliasAsync();
+            context.Logger.LogWarning($"Name = <{name2}> - Alias = <{alias2}>");
 
             var advertisingManager = new AdvertisingManager(context);
             await advertisingManager.RegisterAdvertisementAsync();

@@ -11,7 +11,7 @@ namespace BLEazy.Advertising
             var advertisementProperties = new LEAdvertisementProperties
             {
                 Type = "peripheral",
-                LocalName = context.Configuration.LocalName,
+                LocalName = context.Configuration.Alias,
                 Appearance = context.Configuration.Appearance,
                 ServiceUUIDs = context.Configuration.ServiceUUIDs.ToArray()
             };

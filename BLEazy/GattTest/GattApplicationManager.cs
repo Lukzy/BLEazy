@@ -55,14 +55,14 @@ namespace BLEazy.GattTest
 
         private async Task RegisterApplicationInBluez(string applicationObjectPath)
         {
-            var gattManager = _serverContext.Connection.CreateProxy<IGattManager1>("org.bluez", "/org/bluez/hci0");
+            var gattManager = _serverContext.CreateProxy<IGattManager1>();
             await gattManager.RegisterApplicationAsync(new ObjectPath(applicationObjectPath), new Dictionary<string, object>());
         }
 
         private async Task<GattApplication> BuildGattApplication(string applicationObjectPath)
         {
             var application = new GattApplication(applicationObjectPath);
-            await _serverContext.Connection.RegisterObjectAsync(application);
+            await _serverContext.RegisterObjectAsync(application);
             return application;
         }
 
@@ -71,7 +71,7 @@ namespace BLEazy.GattTest
         {
             var gattService1Properties = GattPropertiesFactory.CreateGattService(serviceDescription);
             var gattService = application.AddService(gattService1Properties);
-            await _serverContext.Connection.RegisterObjectAsync(gattService);
+            await _serverContext.RegisterObjectAsync(gattService);
             return gattService;
         }
 
@@ -79,7 +79,7 @@ namespace BLEazy.GattTest
         {
             var gattCharacteristic1Properties = GattPropertiesFactory.CreateGattCharacteristic(characteristic);
             var gattCharacteristic = gattService.AddCharacteristic(gattCharacteristic1Properties, characteristic.CharacteristicSource);
-            await _serverContext.Connection.RegisterObjectAsync(gattCharacteristic);
+            await _serverContext.RegisterObjectAsync(gattCharacteristic);
             return gattCharacteristic;
         }
 
@@ -88,7 +88,7 @@ namespace BLEazy.GattTest
         {
             var gattDescriptor1Properties = GattPropertiesFactory.CreateGattDescriptor(descriptor);
             var gattDescriptor = gattCharacteristic.AddDescriptor(gattDescriptor1Properties);
-            await _serverContext.Connection.RegisterObjectAsync(gattDescriptor);
+            await _serverContext.RegisterObjectAsync(gattDescriptor);
         }
     }
 }

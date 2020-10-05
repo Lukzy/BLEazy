@@ -4,7 +4,7 @@ namespace BLEazy.Core
 {
     public class BLEazyConfiguration
     {
-        public string LocalName { get; set; }
+        public string Alias { get; set; }
 
         public ushort Appearance { get; set; }
 
