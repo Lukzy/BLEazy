@@ -11,10 +11,9 @@ namespace BLEazy.Example
         public static void Main()
         {
             var logger = CreateLogger();
-            logger.LogInformation("BLEazy Example");
-
             var configuration = CreateConfiguration();
             using var context = new ServerContext(configuration, logger);
+
             using var bluetoothServer = new BluetoothServer(context);
             bluetoothServer.Start();
 
@@ -40,7 +39,7 @@ namespace BLEazy.Example
             var configuration = new ServerConfiguration
             {
                 Alias = "BLEazy",
-                Appearance = 0x1000,
+                Appearance = 128,
                 ServiceUUIDs = new List<string>
                 {
                     "12345678-1234-5678-1234-56789abcdef0"
