@@ -1,4 +1,4 @@
-﻿namespace BLEazy.Gatt
+﻿namespace BLEazy.Core
 {
     public class UUID
     {

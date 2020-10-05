@@ -1,4 +1,6 @@
-﻿namespace BLEazy.Gatt
+﻿using BLEazy.Core;
+
+namespace BLEazy.Gatt
 {
     public abstract class GattDescription
     {
