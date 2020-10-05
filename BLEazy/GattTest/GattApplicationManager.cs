@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BLEazy.BlueZ.Gatt;
 using BLEazy.Core;
 using BLEazy.Gatt;
 using BLEazy.GattTest.BlueZModel;
@@ -55,7 +56,7 @@ namespace BLEazy.GattTest
 
         private async Task RegisterApplicationInBluez(string applicationObjectPath)
         {
-            var gattManager = _serverContext.CreateProxy<IGattManager1>();
+            var gattManager = _serverContext.CreateProxy<IGattManager>();
             await gattManager.RegisterApplicationAsync(new ObjectPath(applicationObjectPath), new Dictionary<string, object>());
         }
 
@@ -69,8 +70,8 @@ namespace BLEazy.GattTest
         private async Task<GattService> AddNewService(GattApplication application,
             GattServiceDescription serviceDescription)
         {
-            var gattService1Properties = GattPropertiesFactory.CreateGattService(serviceDescription);
-            var gattService = application.AddService(gattService1Properties);
+            var gattServiceProperties = GattPropertiesFactory.CreateGattService(serviceDescription);
+            var gattService = application.AddService(gattServiceProperties);
             await _serverContext.RegisterObjectAsync(gattService);
             return gattService;
         }

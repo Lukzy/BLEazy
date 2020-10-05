@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLEazy.BlueZ.Gatt;
 using BLEazy.Utilities;
 using Tmds.DBus;
 
 namespace BLEazy.GattTest.BlueZModel
 {
-    internal class GattCharacteristic : PropertiesBase<GattCharacteristic1Properties>, IGattCharacteristic1,
+    internal class GattCharacteristic : PropertiesBase<GattCharacteristicProperties>, IGattCharacteristic,
         IObjectManagerProperties
     {
         private readonly ICharacteristicSource _characteristicSource;
 
-        public GattCharacteristic(ObjectPath objectPath, GattCharacteristic1Properties properties, ICharacteristicSource characteristicSource) : base(objectPath, properties)
+        public GattCharacteristic(ObjectPath objectPath, GattCharacteristicProperties properties, ICharacteristicSource characteristicSource) : base(objectPath, properties)
         {
             _characteristicSource = characteristicSource;
         }
@@ -63,7 +64,7 @@ namespace BLEazy.GattTest.BlueZModel
             };
         }
 
-        public GattDescriptor AddDescriptor(GattDescriptor1Properties gattDescriptorProperties)
+        public GattDescriptor AddDescriptor(GattDescriptorProperties gattDescriptorProperties)
         {
             gattDescriptorProperties.Characteristic = ObjectPath;
             var gattDescriptor = new GattDescriptor(NextDescriptorPath(), gattDescriptorProperties);

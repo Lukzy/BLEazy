@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BLEazy.BlueZ.Gatt;
 using BLEazy.Utilities;
 using Tmds.DBus;
 
 namespace BLEazy.GattTest.BlueZModel
 {
-    internal class GattDescriptor : PropertiesBase<GattDescriptor1Properties>, IGattDescriptor1, IObjectManagerProperties
+    internal class GattDescriptor : PropertiesBase<GattDescriptorProperties>, IGattDescriptor, IObjectManagerProperties
     {
-        public GattDescriptor(ObjectPath objectPath, GattDescriptor1Properties gattDescriptor1Properties)
-            : base(objectPath, gattDescriptor1Properties)
+        public GattDescriptor(ObjectPath objectPath, GattDescriptorProperties gattDescriptorProperties)
+            : base(objectPath, gattDescriptorProperties)
         {
         }
 

@@ -1,4 +1,5 @@
-﻿using BLEazy.Gatt;
+﻿using BLEazy.BlueZ.Gatt;
+using BLEazy.Gatt;
 using BLEazy.GattTest.Description;
 using Tmds.DBus;
 
@@ -6,9 +7,9 @@ namespace BLEazy.GattTest.BlueZModel
 {
     internal class GattPropertiesFactory
     {
-        public static GattService1Properties CreateGattService(GattServiceDescription serviceDescription)
+        public static GattServiceProperties CreateGattService(GattServiceDescription serviceDescription)
         {
-            return new GattService1Properties
+            return new GattServiceProperties
             {
                 UUID = serviceDescription.UUID,
                 Primary = serviceDescription.Primary,
@@ -16,9 +17,9 @@ namespace BLEazy.GattTest.BlueZModel
             };
         }
 
-        public static GattCharacteristic1Properties CreateGattCharacteristic(GattCharacteristicDescription characteristic)
+        public static GattCharacteristicProperties CreateGattCharacteristic(GattCharacteristicDescription characteristic)
         {
-            var characteristicProperties = new GattCharacteristic1Properties
+            var characteristicProperties = new GattCharacteristicProperties
             {
                 UUID = characteristic.UUID,
                 Flags = characteristic.Flags
@@ -27,9 +28,9 @@ namespace BLEazy.GattTest.BlueZModel
             return characteristicProperties;
         }
 
-        public static GattDescriptor1Properties CreateGattDescriptor(GattDescriptorDescription descriptor)
+        public static GattDescriptorProperties CreateGattDescriptor(GattDescriptorDescription descriptor)
         {
-            var descriptorProperties = new GattDescriptor1Properties
+            var descriptorProperties = new GattDescriptorProperties
             {
                 UUID = descriptor.UUID,
                 Flags = descriptor.Flags,

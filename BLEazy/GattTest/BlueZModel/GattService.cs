@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLEazy.BlueZ.Gatt;
 using BLEazy.Utilities;
 
 namespace BLEazy.GattTest.BlueZModel
 {
-    internal class GattService : PropertiesBase<GattService1Properties>, IGattService1, IObjectManagerProperties
+    internal class GattService : PropertiesBase<GattServiceProperties>, IGattService, IObjectManagerProperties
     {
         private readonly IList<GattCharacteristic> _characteristics = new List<GattCharacteristic>();
 
-        public GattService(string objectPath, GattService1Properties properties) : base(objectPath, properties)
+        public GattService(string objectPath, GattServiceProperties properties) : base(objectPath, properties)
         {
         }
 
@@ -35,7 +36,7 @@ namespace BLEazy.GattTest.BlueZModel
             };
         }
 
-        public GattCharacteristic AddCharacteristic(GattCharacteristic1Properties characteristic, ICharacteristicSource characteristicSource)
+        public GattCharacteristic AddCharacteristic(GattCharacteristicProperties characteristic, ICharacteristicSource characteristicSource)
         {
             characteristic.Service = ObjectPath;
             var gattCharacteristic = new GattCharacteristic(NextCharacteristicPath(), characteristic, characteristicSource);
