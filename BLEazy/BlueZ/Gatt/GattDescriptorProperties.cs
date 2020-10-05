@@ -9,7 +9,7 @@ using Tmds.DBus;
 namespace BLEazy.BlueZ.Gatt
 {
     [Dictionary]
-    public class GattDescriptorProperties
+    internal class GattDescriptorProperties
     {
         private ObjectPath _Characteristic;
 
