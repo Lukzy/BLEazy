@@ -1,6 +1,9 @@
 using System.Runtime.CompilerServices;
 using Tmds.DBus;
 
+// ReSharper disable ConvertToAutoProperty
+// ReSharper disable InconsistentNaming
+
 [assembly: InternalsVisibleTo(Connection.DynamicAssemblyName)]
 
 namespace BLEazy.BlueZ.Gatt
@@ -8,14 +11,49 @@ namespace BLEazy.BlueZ.Gatt
     [Dictionary]
     public class GattCharacteristicProperties
     {
-        public string UUID { get; set; }
+        private string[] _Flags;
 
-        public ObjectPath Service { get; set; }
+        private bool _Notifying;
 
-        public byte[] Value { get; set; } = default;
+        private ObjectPath _Service;
 
-        public bool Notifying { get; set; } = default;
+        private string _UUID;
 
-        public string[] Flags { get; set; }
+        private byte[] _Value;
+
+        public string UUID
+        {
+            get => _UUID;
+
+            set => _UUID = value;
+        }
+
+        public ObjectPath Service
+        {
+            get => _Service;
+
+            set => _Service = value;
+        }
+
+        public byte[] Value
+        {
+            get => _Value;
+
+            set => _Value = value;
+        }
+
+        public bool Notifying
+        {
+            get => _Notifying;
+
+            set => _Notifying = value;
+        }
+
+        public string[] Flags
+        {
+            get => _Flags;
+
+            set => _Flags = value;
+        }
     }
 }
