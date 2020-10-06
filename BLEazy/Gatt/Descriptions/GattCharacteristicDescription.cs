@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using BLEazy.Gatt.Sources;
 
-namespace BLEazy.GattTest.Description
+namespace BLEazy.Gatt.Descriptions
 {
-    public class GattCharacteristicDescription
+    public class GattCharacteristicDescription : GattDescription
     {
         private readonly IList<GattDescriptorDescription> _descriptors = new List<GattDescriptorDescription>();
 
@@ -10,7 +11,6 @@ namespace BLEazy.GattTest.Description
 
         public ICharacteristicSource CharacteristicSource { get; set; }
 
-        public string UUID { get; set; }
         public string[] Flags { get; set; }
 
         public void AddDescriptor(GattDescriptorDescription gattDescriptorDescription)

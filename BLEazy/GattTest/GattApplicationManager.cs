@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using BLEazy.BlueZ.Gatt;
 using BLEazy.Core;
-using BLEazy.Gatt;
-using BLEazy.GattTest.Description;
+using BLEazy.Gatt.Descriptions;
 using Tmds.DBus;
 
 namespace BLEazy.GattTest

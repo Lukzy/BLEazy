@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using BLEazy.GattTest.Description;
 
-namespace BLEazy.Gatt
+namespace BLEazy.Gatt.Descriptions
 {
     public class GattServiceDescription : GattDescription
     {

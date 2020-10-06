@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BLEazy.GattTest;
+using BLEazy.Gatt.Sources;
 using BLEazy.Utilities;
 
 namespace BLEazy.BlueZ.Gatt

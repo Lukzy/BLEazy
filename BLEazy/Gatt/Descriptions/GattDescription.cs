@@ -1,6 +1,6 @@
 ﻿using BLEazy.Core;
 
-namespace BLEazy.Gatt
+namespace BLEazy.Gatt.Descriptions
 {
     public abstract class GattDescription
     {

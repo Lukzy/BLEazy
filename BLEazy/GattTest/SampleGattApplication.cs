@@ -1,9 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BLEazy.Core;
-using BLEazy.Gatt;
-using BLEazy.GattTest.Description;
+using BLEazy.Gatt.Descriptions;
 
 namespace BLEazy.GattTest
 {
@@ -20,7 +17,7 @@ namespace BLEazy.GattTest
             var gattCharacteristicDescription = new GattCharacteristicDescription
             {
                 CharacteristicSource = new ExampleCharacteristicSource(),
-                UUID = "12345678-1234-5678-1234-56789abcdef1",
+                UUID = new UUID("12345678-1234-5678-1234-56789abcdef1"),
                 Flags = new[]
                 {
                     "read", "write", "writable-auxiliaries"
@@ -32,7 +29,7 @@ namespace BLEazy.GattTest
                 {
                     (byte) 't'
                 },
-                UUID = "12345678-1234-5678-1234-56789abcdef2",
+                UUID = new UUID("12345678-1234-5678-1234-56789abcdef2"),
                 Flags = new[]
                 {
                     "read", "write"
@@ -48,21 +45,6 @@ namespace BLEazy.GattTest
                 });
 
             await new GattApplicationManager(serverContext).RegisterGattApplication(gab.BuildServiceDescriptions());
-        }
-
-        internal class ExampleCharacteristicSource : ICharacteristicSource
-        {
-            public Task WriteValueAsync(byte[] value)
-            {
-                Console.WriteLine("Writing value");
-                return Task.Run(() => Console.WriteLine(Encoding.ASCII.GetChars(value)));
-            }
-
-            public Task<byte[]> ReadValueAsync()
-            {
-                Console.WriteLine("Reading value");
-                return Task.FromResult(Encoding.ASCII.GetBytes("Hello BLE"));
-            }
         }
     }
 }

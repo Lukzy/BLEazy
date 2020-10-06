@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BLEazy.GattTest;
+using BLEazy.Gatt.Sources;
 using BLEazy.Utilities;
 using Tmds.DBus;
 

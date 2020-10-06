@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 
-namespace BLEazy.GattTest
+namespace BLEazy.Gatt.Sources
 {
     public interface ICharacteristicSource
     {
         Task WriteValueAsync(byte[] value);
+
         Task<byte[]> ReadValueAsync();
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BLEazy.Gatt;
+using BLEazy.Gatt.Descriptions;
 
-namespace BLEazy.GattTest.Description
+namespace BLEazy.GattTest
 {
     public class GattApplicationBuilder
     {
