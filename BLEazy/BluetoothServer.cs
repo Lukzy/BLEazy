@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLEazy.Advertising;
 using BLEazy.BlueZ.Adapter;
 using BLEazy.Core;
-using BLEazy.Gatt;
 using BLEazy.GattTest;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +11,6 @@ namespace BLEazy
     public class BluetoothServer : IDisposable
     {
         private readonly ServerContext _context;
-        private readonly object _sync = new object();
 
         private Task _serverTask;
 
@@ -31,22 +28,31 @@ namespace BLEazy
 
         public void Start()
         {
-            lock (_sync)
+            if (_serverTask != null)
             {
-                _context.Logger.LogInformation("Starting Bluetooth server.");
-
-                _serverTask = Task.Run(RunBluetoothServer);
+                _context.Logger.LogInformation("Bluetooth server already started.");
+                return;
             }
+
+            _context.Logger.LogInformation("Starting Bluetooth server.");
+            _serverTask = Task.Run(RunBluetoothServer).ContinueWith(x =>
+            {
+                var errorMessage = x.Exception != null ? x.Exception.Message : "Unknown error occurred.";
+                _context.Logger.LogError(errorMessage);
+            }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         public void Stop()
         {
-            lock (_sync)
+            if (_serverTask == null || _serverTask.IsFaulted)
             {
-                _serverTask?.Wait();
-
-                _context.Logger.LogInformation("Bluetooth server stopped.");
+                return;
             }
+
+            _serverTask?.Wait();
+            _serverTask = null;
+
+            _context.Logger.LogInformation("Bluetooth server stopped.");
         }
 
         private async Task RunBluetoothServer()
@@ -78,13 +84,11 @@ namespace BLEazy
 
         private async Task RegisterGattAsync()
         {
-            var application = new GattApplication
-            {
-                Services = new List<GattServiceDescription>()
-            };
+            /*var application = new GattApplication();
 
             var gattManager = new GattManager(_context);
             await gattManager.RegisterApplication(application);
+            */
             await SampleGattApplication.RegisterGattApplication(_context);
         }
     }

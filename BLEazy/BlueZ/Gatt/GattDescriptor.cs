@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BLEazy.BlueZ.Gatt;
 using BLEazy.Utilities;
 using Tmds.DBus;
 
-namespace BLEazy.GattTest.BlueZModel
+namespace BLEazy.BlueZ.Gatt
 {
     internal class GattDescriptor : PropertiesBase<GattDescriptorProperties>, IGattDescriptor, IObjectManagerProperties
     {
@@ -20,6 +19,7 @@ namespace BLEazy.GattTest.BlueZModel
 
         public IDictionary<string, IDictionary<string, object>> GetProperties()
         {
+            // TODO try to extract
             return new Dictionary<string, IDictionary<string, object>>
             {
                 {

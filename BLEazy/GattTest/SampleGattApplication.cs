@@ -64,20 +64,5 @@ namespace BLEazy.GattTest
                 return Task.FromResult(Encoding.ASCII.GetBytes("Hello BLE"));
             }
         }
-
-        internal class ExampleCharacteristicSource2 : ICharacteristicSource
-        {
-            public Task WriteValueAsync(byte[] value)
-            {
-                Console.WriteLine("Makes no sense");
-                return Task.CompletedTask;
-            }
-
-            public Task<byte[]> ReadValueAsync()
-            {
-                Console.WriteLine("Read Device Name");
-                return Task.FromResult(Encoding.ASCII.GetBytes("BLEazy"));
-            }
-        }
     }
 }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLEazy.BlueZ.Gatt;
 using BLEazy.Core;
 using BLEazy.Gatt;
-using BLEazy.GattTest.BlueZModel;
 using BLEazy.GattTest.Description;
 using Tmds.DBus;
-using GattApplication = BLEazy.GattTest.BlueZModel.GattApplication;
 
 namespace BLEazy.GattTest
 {
@@ -22,21 +19,13 @@ namespace BLEazy.GattTest
 
         public async Task RegisterGattApplication(IEnumerable<GattServiceDescription> gattServiceDescriptions)
         {
-            var applicationObjectPath = GenerateApplicationObjectPath();
-            await BuildApplicationTree(applicationObjectPath, gattServiceDescriptions);
-            await RegisterApplicationInBluez(applicationObjectPath);
+            var application = await BuildApplicationTree(gattServiceDescriptions);
+            await RegisterApplicationInBluez(application.ObjectPath);
         }
 
-        private static string GenerateApplicationObjectPath()
+        private async Task<GattApplication> BuildApplicationTree(IEnumerable<GattServiceDescription> gattServiceDescriptions)
         {
-            var appId = Guid.NewGuid().ToString().Substring(0, 8);
-            var applicationObjectPath = $"/{appId}";
-            return applicationObjectPath;
-        }
-
-        private async Task BuildApplicationTree(string applicationObjectPath, IEnumerable<GattServiceDescription> gattServiceDescriptions)
-        {
-            var application = await BuildGattApplication(applicationObjectPath);
+            var application = await BuildGattApplication();
 
             foreach (var serviceDescription in gattServiceDescriptions)
             {
@@ -52,17 +41,19 @@ namespace BLEazy.GattTest
                     }
                 }
             }
+
+            return application;
         }
 
-        private async Task RegisterApplicationInBluez(string applicationObjectPath)
+        private async Task RegisterApplicationInBluez(ObjectPath applicationObjectPath)
         {
             var gattManager = _serverContext.CreateProxy<IGattManager>();
-            await gattManager.RegisterApplicationAsync(new ObjectPath(applicationObjectPath), new Dictionary<string, object>());
+            await gattManager.RegisterApplicationAsync(applicationObjectPath, new Dictionary<string, object>());
         }
 
-        private async Task<GattApplication> BuildGattApplication(string applicationObjectPath)
+        private async Task<GattApplication> BuildGattApplication()
         {
-            var application = new GattApplication(applicationObjectPath);
+            var application = new GattApplication();
             await _serverContext.RegisterObjectAsync(application);
             return application;
         }

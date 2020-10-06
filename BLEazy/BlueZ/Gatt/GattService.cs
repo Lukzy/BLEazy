@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BLEazy.BlueZ.Gatt;
+using BLEazy.GattTest;
 using BLEazy.Utilities;
 
-namespace BLEazy.GattTest.BlueZModel
+namespace BLEazy.BlueZ.Gatt
 {
     internal class GattService : PropertiesBase<GattServiceProperties>, IGattService, IObjectManagerProperties
     {
@@ -17,6 +17,7 @@ namespace BLEazy.GattTest.BlueZModel
 
         public IDictionary<string, IDictionary<string, object>> GetProperties()
         {
+            // TODO try to extract
             return new Dictionary<string, IDictionary<string, object>>
             {
                 {
@@ -36,14 +37,13 @@ namespace BLEazy.GattTest.BlueZModel
             };
         }
 
-        public GattCharacteristic AddCharacteristic(GattCharacteristicProperties characteristic, ICharacteristicSource characteristicSource)
+        public GattCharacteristic AddCharacteristic(GattCharacteristicProperties characteristicProperties, ICharacteristicSource characteristicSource)
         {
-            characteristic.Service = ObjectPath;
-            var gattCharacteristic = new GattCharacteristic(NextCharacteristicPath(), characteristic, characteristicSource);
+            // TODO adapt to new mechanism
+            characteristicProperties.Service = ObjectPath;
+            var gattCharacteristic = new GattCharacteristic(NextCharacteristicPath(), characteristicProperties, characteristicSource);
             _characteristics.Add(gattCharacteristic);
-
             Properties.Characteristics = Properties.Characteristics.Append(NextCharacteristicPath()).ToArray();
-
             return gattCharacteristic;
         }
 

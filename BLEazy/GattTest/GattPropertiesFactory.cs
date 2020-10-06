@@ -3,7 +3,7 @@ using BLEazy.Gatt;
 using BLEazy.GattTest.Description;
 using Tmds.DBus;
 
-namespace BLEazy.GattTest.BlueZModel
+namespace BLEazy.GattTest
 {
     internal class GattPropertiesFactory
     {

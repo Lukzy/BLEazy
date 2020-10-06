@@ -1,21 +1,19 @@
-﻿using System.Threading.Tasks;
-using BLEazy.Core;
+﻿using BLEazy.Core;
+using Microsoft.Extensions.Logging;
 
 namespace BLEazy.Gatt
 {
     public class GattManager
     {
-        // ReSharper disable once NotAccessedField.Local
-        private readonly ServerContext _context;
-
         public GattManager(ServerContext context)
         {
-            _context = context;
+            context.Logger.LogInformation("GattManager started");
         }
 
+        /*
         public async Task RegisterApplication(GattApplication application)
         {
             await Task.CompletedTask;
-        }
+        }*/
     }
 }

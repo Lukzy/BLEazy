@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BLEazy.GattTest.BlueZModel
+namespace BLEazy.BlueZ
 {
     internal interface IObjectManagerProperties
     {

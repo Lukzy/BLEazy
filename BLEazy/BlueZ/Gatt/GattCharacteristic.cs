@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BLEazy.BlueZ.Gatt;
+using BLEazy.GattTest;
 using BLEazy.Utilities;
 using Tmds.DBus;
 
-namespace BLEazy.GattTest.BlueZModel
+namespace BLEazy.BlueZ.Gatt
 {
-    internal class GattCharacteristic : PropertiesBase<GattCharacteristicProperties>, IGattCharacteristic,
-        IObjectManagerProperties
+    internal class GattCharacteristic : PropertiesBase<GattCharacteristicProperties>, IGattCharacteristic, IObjectManagerProperties
     {
         private readonly ICharacteristicSource _characteristicSource;
 
@@ -42,6 +41,7 @@ namespace BLEazy.GattTest.BlueZModel
 
         public IDictionary<string, IDictionary<string, object>> GetProperties()
         {
+            // TODO try to extract
             return new Dictionary<string, IDictionary<string, object>>
             {
                 {
@@ -66,6 +66,7 @@ namespace BLEazy.GattTest.BlueZModel
 
         public GattDescriptor AddDescriptor(GattDescriptorProperties gattDescriptorProperties)
         {
+            // TODO adapt to new mechanism
             gattDescriptorProperties.Characteristic = ObjectPath;
             var gattDescriptor = new GattDescriptor(NextDescriptorPath(), gattDescriptorProperties);
             Descriptors.Add(gattDescriptor);

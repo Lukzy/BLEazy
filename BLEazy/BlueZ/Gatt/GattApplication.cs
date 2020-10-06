@@ -1,19 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BLEazy.BlueZ;
-using BLEazy.BlueZ.Gatt;
+using BLEazy.Utilities;
 using Tmds.DBus;
 
-namespace BLEazy.GattTest.BlueZModel
+namespace BLEazy.BlueZ.Gatt
 {
-    [DBusInterface("org.freedesktop.DBus.ObjectManager")]
     internal class GattApplication : IObjectManager
     {
         private readonly IList<GattService> _services = new List<GattService>();
 
-        public GattApplication(ObjectPath objectPath)
+        public GattApplication()
         {
-            ObjectPath = objectPath;
+            ObjectPath = ObjectPathHelper.GenerateObjectPath();
         }
 
         public ObjectPath ObjectPath { get; }
