@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using BLEazy.BlueZ.Gatt;
 using BLEazy.Core;
 using BLEazy.Gatt.Descriptions;
-using Tmds.DBus;
 
-namespace BLEazy.GattTest
+namespace BLEazy.Gatt
 {
     public class GattApplicationManager
     {
+        //TODO refactor application build process
+
         private readonly ServerContext _serverContext;
 
         public GattApplicationManager(ServerContext serverContext)
@@ -16,13 +17,7 @@ namespace BLEazy.GattTest
             _serverContext = serverContext;
         }
 
-        public async Task RegisterGattApplication(IEnumerable<GattServiceDescription> gattServiceDescriptions)
-        {
-            var application = await BuildApplicationTree(gattServiceDescriptions);
-            await RegisterApplicationInBluez(application.ObjectPath);
-        }
-
-        private async Task<GattApplication> BuildApplicationTree(IEnumerable<GattServiceDescription> gattServiceDescriptions)
+        internal async Task<GattApplication> BuildApplicationTree(IEnumerable<GattServiceDescription> gattServiceDescriptions)
         {
             var application = await BuildGattApplication();
 
@@ -42,12 +37,6 @@ namespace BLEazy.GattTest
             }
 
             return application;
-        }
-
-        private async Task RegisterApplicationInBluez(ObjectPath applicationObjectPath)
-        {
-            var gattManager = _serverContext.CreateProxy<IGattManager>();
-            await gattManager.RegisterApplicationAsync(applicationObjectPath, new Dictionary<string, object>());
         }
 
         private async Task<GattApplication> BuildGattApplication()

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BLEazy.Core;
 using BLEazy.Gatt.Descriptions;
 
@@ -6,7 +6,7 @@ namespace BLEazy.GattTest
 {
     public class SampleGattApplication
     {
-        public static async Task RegisterGattApplication(ServerContext serverContext)
+        public static IEnumerable<GattServiceDescription> BuildServiceDescriptions()
         {
             var gattServiceDescription = new GattServiceDescription
             {
@@ -44,7 +44,7 @@ namespace BLEazy.GattTest
                     gattDescriptorDescription
                 });
 
-            await new GattApplicationManager(serverContext).RegisterGattApplication(gab.BuildServiceDescriptions());
+            return gab.BuildServiceDescriptions();
         }
     }
 }

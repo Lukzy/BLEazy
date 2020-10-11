@@ -18,6 +18,8 @@ namespace BLEazy.Example
             bluetoothServer.Start();
 
             Console.ReadKey();
+
+            bluetoothServer.Stop();
         }
 
         private static ILogger CreateLogger()

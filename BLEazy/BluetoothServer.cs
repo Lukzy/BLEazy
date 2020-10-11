@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using BLEazy.Advertising;
 using BLEazy.BlueZ.Adapter;
 using BLEazy.Core;
+using BLEazy.Gatt;
 using BLEazy.GattTest;
 using Microsoft.Extensions.Logging;
 
@@ -11,8 +13,10 @@ namespace BLEazy
     public class BluetoothServer : IDisposable
     {
         private readonly ServerContext _context;
-
+        private CancellationTokenSource _cancellationTokenSource;
+        private GattManager _gattManager;
         private Task _serverTask;
+        private CancellationToken _token;
 
         public BluetoothServer(ServerContext context)
         {
@@ -34,8 +38,11 @@ namespace BLEazy
                 return;
             }
 
+            _cancellationTokenSource = new CancellationTokenSource();
+            _token = _cancellationTokenSource.Token;
+
             _context.Logger.LogInformation("Starting Bluetooth server.");
-            _serverTask = Task.Run(RunBluetoothServer).ContinueWith(x =>
+            _serverTask = Task.Run(RunBluetoothServer, _token).ContinueWith(x =>
             {
                 var errorMessage = x.Exception != null ? x.Exception.Message : "Unknown error occurred.";
                 _context.Logger.LogError(errorMessage);
@@ -49,7 +56,8 @@ namespace BLEazy
                 return;
             }
 
-            _serverTask?.Wait();
+            _cancellationTokenSource.Cancel();
+            UnregisterGatt();
             _serverTask = null;
 
             _context.Logger.LogInformation("Bluetooth server stopped.");
@@ -84,12 +92,20 @@ namespace BLEazy
 
         private async Task RegisterGattAsync()
         {
-            /*var application = new GattApplication();
+            //var application = new GattApplication();
+            //TODO refactor creation of application and services
+            var serviceDescriptions = SampleGattApplication.BuildServiceDescriptions();
+            _gattManager = new GattManager(_context);
+            await _gattManager.RegisterApplication(serviceDescriptions);
 
-            var gattManager = new GattManager(_context);
-            await gattManager.RegisterApplication(application);
-            */
-            await SampleGattApplication.RegisterGattApplication(_context);
+            _context.Logger.LogInformation("Gatt application registered.");
+        }
+
+        private void UnregisterGatt()
+        {
+            _gattManager?.UnregisterApplication().Wait(1000);
+
+            _context.Logger.LogInformation("Gatt application unregistered.");
         }
     }
 }

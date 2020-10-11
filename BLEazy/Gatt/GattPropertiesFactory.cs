@@ -2,10 +2,12 @@
 using BLEazy.Gatt.Descriptions;
 using Tmds.DBus;
 
-namespace BLEazy.GattTest
+namespace BLEazy.Gatt
 {
     internal class GattPropertiesFactory
     {
+        //TODO refactor factories and use a mapper instead
+
         public static GattServiceProperties CreateGattService(GattServiceDescription serviceDescription)
         {
             return new GattServiceProperties

@@ -11,7 +11,7 @@ namespace BLEazy.BlueZ.Gatt
 
         public GattApplication()
         {
-            ObjectPath = ObjectPathHelper.GenerateObjectPath();
+            ObjectPath = ObjectPathHelper.GenerateApplicationObjectPath();
         }
 
         public ObjectPath ObjectPath { get; }
