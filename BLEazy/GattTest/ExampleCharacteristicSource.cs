@@ -7,16 +7,34 @@ namespace BLEazy.GattTest
 {
     internal class ExampleCharacteristicSource : ICharacteristicSource
     {
+        private byte[] _data = Encoding.ASCII.GetBytes("BLEazy!");
+
         public Task WriteValueAsync(byte[] value)
         {
-            Console.WriteLine("Writing value");
-            return Task.Run(() => Console.WriteLine(Encoding.ASCII.GetChars(value)));
+            return Task.Run(() =>
+            {
+
+                var stringBuilder = new StringBuilder();
+                stringBuilder.Append("Writing <");
+                stringBuilder.Append(Encoding.ASCII.GetChars(value));
+                stringBuilder.Append("> to replace <");
+                stringBuilder.Append(Encoding.ASCII.GetChars(_data));
+                stringBuilder.Append(">");
+                Console.WriteLine(stringBuilder.ToString());
+                
+                _data = value;
+            });
         }
 
         public Task<byte[]> ReadValueAsync()
         {
-            Console.WriteLine("Reading value");
-            return Task.FromResult(Encoding.ASCII.GetBytes("Hello BLE"));
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append("Returning <");
+            stringBuilder.Append(Encoding.ASCII.GetChars(_data));
+            stringBuilder.Append(">");
+            Console.WriteLine(stringBuilder.ToString());
+
+            return Task.FromResult(_data);
         }
     }
 }
