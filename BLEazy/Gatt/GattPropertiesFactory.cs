@@ -1,5 +1,5 @@
 ﻿using BLEazy.BlueZ.Gatt;
-using BLEazy.Gatt.Descriptions;
+using BLEazy.Gatt.Services;
 using Tmds.DBus;
 
 namespace BLEazy.Gatt
@@ -8,37 +8,25 @@ namespace BLEazy.Gatt
     {
         //TODO refactor factories and use a mapper instead
 
-        public static GattServiceProperties CreateGattService(GattServiceDescription serviceDescription)
+        public static GattServiceProperties CreateGattService(Service service)
         {
             return new GattServiceProperties
             {
-                UUID = serviceDescription.UUID,
-                Primary = serviceDescription.Primary,
+                UUID = service.UUID,
+                Primary = service.IsPrimary,
                 Characteristics = new ObjectPath[0]
             };
         }
 
-        public static GattCharacteristicProperties CreateGattCharacteristic(GattCharacteristicDescription characteristic)
+        public static GattCharacteristicProperties CreateGattCharacteristic(Characteristic characteristic)
         {
             var characteristicProperties = new GattCharacteristicProperties
             {
                 UUID = characteristic.UUID,
-                Flags = characteristic.Flags
+                Flags = new[] {"read", "write"}
             };
 
             return characteristicProperties;
-        }
-
-        public static GattDescriptorProperties CreateGattDescriptor(GattDescriptorDescription descriptor)
-        {
-            var descriptorProperties = new GattDescriptorProperties
-            {
-                UUID = descriptor.UUID,
-                Flags = descriptor.Flags,
-                Value = descriptor.Value
-            };
-
-            return descriptorProperties;
         }
     }
 }

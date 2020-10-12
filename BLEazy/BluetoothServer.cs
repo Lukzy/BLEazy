@@ -5,7 +5,6 @@ using BLEazy.Advertising;
 using BLEazy.BlueZ.Adapter;
 using BLEazy.Core;
 using BLEazy.Gatt;
-using BLEazy.GattTest;
 using Microsoft.Extensions.Logging;
 
 namespace BLEazy
@@ -92,18 +91,15 @@ namespace BLEazy
 
         private async Task RegisterGattAsync()
         {
-            //var application = new GattApplication();
-            //TODO refactor creation of application and services
-            var serviceDescriptions = SampleGattApplication.BuildServiceDescriptions();
             _gattManager = new GattManager(_context);
-            await _gattManager.RegisterApplication(serviceDescriptions);
+            await _gattManager.RegisterApplicationAsync();
 
             _context.Logger.LogInformation("Gatt application registered.");
         }
 
         private void UnregisterGatt()
         {
-            _gattManager?.UnregisterApplication().Wait(1000);
+            _gattManager?.UnregisterApplicationAsync().Wait(1000);
 
             _context.Logger.LogInformation("Gatt application unregistered.");
         }

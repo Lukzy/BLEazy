@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using BLEazy.Core;
-using BLEazy.Gatt.Sources;
 
 namespace BLEazy.Gatt.Services
 {
@@ -17,7 +16,7 @@ namespace BLEazy.Gatt.Services
             IsPrimary = isPrimary;
         }
 
-        public Service(UUID uuid, bool isPrimary, IList<ICharacteristicSource> characteristics)
+        public Service(UUID uuid, bool isPrimary, IList<Characteristic> characteristics)
         {
             UUID = uuid;
             IsPrimary = isPrimary;
@@ -28,6 +27,6 @@ namespace BLEazy.Gatt.Services
 
         public bool IsPrimary { get; }
 
-        public IList<ICharacteristicSource> Characteristics { get; } = new List<ICharacteristicSource>();
+        public IList<Characteristic> Characteristics { get; } = new List<Characteristic>();
     }
 }

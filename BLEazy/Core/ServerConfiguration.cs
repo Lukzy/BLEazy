@@ -10,7 +10,7 @@ namespace BLEazy.Core
 
         public ushort Appearance { get; set; }
 
-        public IList<Service> Services { get; set; }
+        public IList<Service> Services { get; } = new List<Service>();
 
         public string[] GetServiceUUIDs()
         {

@@ -2,11 +2,11 @@
 using System.Text;
 using System.Threading.Tasks;
 using BLEazy.Core;
-using BLEazy.Gatt.Sources;
+using BLEazy.Gatt.Services;
 
 namespace BLEazy.Example
 {
-    public class ExampleCharacteristic : Characteristic, ICharacteristicSource
+    public class ExampleCharacteristic : Characteristic
     {
         private byte[] _data = Encoding.ASCII.GetBytes("BLEazy!");
 
@@ -15,7 +15,7 @@ namespace BLEazy.Example
         {
         }
 
-        public Task WriteValueAsync(byte[] value)
+        public override Task WriteValueAsync(byte[] value)
         {
             return Task.Run(() =>
             {
@@ -31,7 +31,7 @@ namespace BLEazy.Example
             });
         }
 
-        public Task<byte[]> ReadValueAsync()
+        public override Task<byte[]> ReadValueAsync()
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.Append("Returning <");
@@ -41,20 +41,5 @@ namespace BLEazy.Example
 
             return Task.FromResult(_data);
         }
-    }
-
-    public class Characteristic
-    {
-        public Characteristic()
-            : this(UUID.Generate())
-        {
-        }
-
-        public Characteristic(UUID uuid)
-        {
-            UUID = uuid;
-        }
-
-        public UUID UUID { get; }
     }
 }

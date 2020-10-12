@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BLEazy.Gatt.Sources
+namespace BLEazy.Gatt.Services
 {
     public interface ICharacteristicSource
     {
