@@ -27,7 +27,7 @@ namespace BLEazy.Advertising
             }
 
             _advertisement = AdvertisementFactory.CreateAdvertisement(_context);
-            await _context.Connection.RegisterObjectAsync(_advertisement);
+            await _context.RegisterObjectAsync(_advertisement);
             _logHelper.LogRegisteredDBusAdvertisement(_advertisement.ObjectPath);
 
             await GetAdvertisingManager().RegisterAdvertisementAsync(_advertisement.ObjectPath, new Dictionary<string, object>());
@@ -45,7 +45,7 @@ namespace BLEazy.Advertising
             await GetAdvertisingManager().UnregisterAdvertisementAsync(_advertisement.ObjectPath);
             await _logHelper.LogUnregisteredBluezAdvertisement(_advertisement.ObjectPath);
 
-            _context.Connection.UnregisterObject(_advertisement.ObjectPath);
+            _context.UnregisterObject(_advertisement.ObjectPath);
             _logHelper.LogUnregisteredDBusAdvertisement(_advertisement.ObjectPath);
 
             await _advertisement.ReleaseAsync();
@@ -61,7 +61,7 @@ namespace BLEazy.Advertising
 
         private ILEAdvertisingManager GetAdvertisingManager()
         {
-            return _context.Connection.CreateProxy<ILEAdvertisingManager>("org.bluez", "/org/bluez/hci0");
+            return _context.CreateProxy<ILEAdvertisingManager>();
         }
     }
 }

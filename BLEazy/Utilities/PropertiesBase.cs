@@ -16,14 +16,14 @@ namespace BLEazy.Utilities
 
         public ObjectPath ObjectPath { get; }
 
-        public Task<object> GetAsync(string prop)
+        public Task<object> GetAsync(string property)
         {
-            return Task.FromResult(Properties.ReadProperty(prop));
+            return Task.FromResult(Properties.ReadProperty(property));
         }
 
-        public Task<T> GetAsync<T>(string prop)
+        public Task<T> GetAsync<T>(string property)
         {
-            return Task.FromResult(Properties.ReadProperty<T>(prop));
+            return Task.FromResult(Properties.ReadProperty<T>(property));
         }
 
         public Task<TV> GetAllAsync()
@@ -31,9 +31,9 @@ namespace BLEazy.Utilities
             return Task.FromResult(Properties);
         }
 
-        public Task SetAsync(string prop, object val)
+        public Task SetAsync(string property, object value)
         {
-            return Properties.SetProperty(prop, val);
+            return Properties.SetProperty(property, value);
         }
 
         public Task<IDisposable> WatchPropertiesAsync(Action<PropertyChanges> handler)

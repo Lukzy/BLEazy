@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using BLEazy.Core;
+using BLEazy.Gatt.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
@@ -9,39 +8,45 @@ namespace BLEazy.Example
 {
     public class Program
     {
-        public static async Task Main()
+        public static void Main()
         {
             var logger = CreateLogger();
-            logger.LogInformation("BLEazy Example");
+            var configuration = CreateConfiguration();
+            var service = new Service(new UUID("12345678-1234-5678-1234-56789abcdef0"), true);
+            service.Characteristics.Add(new ExampleCharacteristic());
+            configuration.Services.Add(service);
+            using var context = new ServerContext(configuration, logger);
 
-            var peripheralConfiguration = new BLEazyConfiguration
-            {
-                LocalName = "BLEazy",
-                Appearance = 0x1000,
-                ServiceUUIDs = new List<string>
-                {
-                    "0x1805",
-                    "0x180A"
-                }
-            };
-            using var context = new ServerContext(peripheralConfiguration, logger);
-
-            var bluetoothManager = new BluetoothManager(context);
-            await bluetoothManager.StartAdvertisementAsync();
+            using var bluetoothServer = new BluetoothServer(context);
+            bluetoothServer.Start();
 
             Console.ReadKey();
-
-            await bluetoothManager.StopAdvertisement();
+            bluetoothServer.Stop();
         }
 
         private static ILogger CreateLogger()
         {
-            var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole(options =>
+            var loggerFactory = LoggerFactory.Create(builder =>
             {
-                options.Format = ConsoleLoggerFormat.Default;
-            }));
+                builder.SetMinimumLevel(LogLevel.Trace);
+                builder.AddConsole(options =>
+                {
+                    options.Format = ConsoleLoggerFormat.Default;
+                });
+            });
             var logger = loggerFactory.CreateLogger("BLEazy");
             return logger;
+        }
+
+        private static ServerConfiguration CreateConfiguration()
+        {
+            var configuration = new ServerConfiguration
+            {
+                Alias = "BLEazy",
+                Appearance = 128
+            };
+
+            return configuration;
         }
     }
 }
