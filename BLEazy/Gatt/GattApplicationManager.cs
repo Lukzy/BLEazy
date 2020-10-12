@@ -27,12 +27,7 @@ namespace BLEazy.Gatt
 
                 foreach (var characteristicDescription in serviceDescription.GattCharacteristicDescriptions)
                 {
-                    var characteristic = await AddNewCharacteristic(service, characteristicDescription);
-
-                    foreach (var descriptorDescription in characteristicDescription.Descriptors)
-                    {
-                        await AddNewDescriptor(characteristic, descriptorDescription);
-                    }
+                    await AddNewCharacteristic(service, characteristicDescription);
                 }
             }
 
@@ -55,20 +50,11 @@ namespace BLEazy.Gatt
             return gattService;
         }
 
-        private async Task<GattCharacteristic> AddNewCharacteristic(GattService gattService, GattCharacteristicDescription characteristic)
+        private async Task AddNewCharacteristic(GattService gattService, GattCharacteristicDescription characteristic)
         {
             var gattCharacteristicProperties = GattPropertiesFactory.CreateGattCharacteristic(characteristic);
             var gattCharacteristic = gattService.AddCharacteristic(gattCharacteristicProperties, characteristic.CharacteristicSource);
             await _serverContext.RegisterObjectAsync(gattCharacteristic);
-            return gattCharacteristic;
-        }
-
-        private async Task AddNewDescriptor(GattCharacteristic gattCharacteristic,
-            GattDescriptorDescription descriptor)
-        {
-            var gattDescriptorProperties = GattPropertiesFactory.CreateGattDescriptor(descriptor);
-            var gattDescriptor = gattCharacteristic.AddDescriptor(gattDescriptorProperties);
-            await _serverContext.RegisterObjectAsync(gattDescriptor);
         }
     }
 }

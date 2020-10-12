@@ -23,26 +23,11 @@ namespace BLEazy.GattTest
                     "read", "write", "writable-auxiliaries"
                 }
             };
-            var gattDescriptorDescription = new GattDescriptorDescription
-            {
-                Value = new[]
-                {
-                    (byte) 't'
-                },
-                UUID = new UUID("12345678-1234-5678-1234-56789abcdef2"),
-                Flags = new[]
-                {
-                    "read", "write"
-                }
-            };
 
             var gab = new GattApplicationBuilder();
             gab
                 .AddService(gattServiceDescription)
-                .WithCharacteristic(gattCharacteristicDescription, new[]
-                {
-                    gattDescriptorDescription
-                });
+                .WithCharacteristic(gattCharacteristicDescription);
 
             return gab.BuildServiceDescriptions();
         }

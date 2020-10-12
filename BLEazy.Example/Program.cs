@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using BLEazy.Core;
+using BLEazy.Gatt.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
@@ -12,13 +12,15 @@ namespace BLEazy.Example
         {
             var logger = CreateLogger();
             var configuration = CreateConfiguration();
+            var service = new Service(new UUID("12345678-1234-5678-1234-56789abcdef0"), true);
+            service.Characteristics.Add(new ExampleCharacteristic());
+            configuration.Services.Add(service);
             using var context = new ServerContext(configuration, logger);
 
             using var bluetoothServer = new BluetoothServer(context);
             bluetoothServer.Start();
 
             Console.ReadKey();
-
             bluetoothServer.Stop();
         }
 
@@ -41,11 +43,7 @@ namespace BLEazy.Example
             var configuration = new ServerConfiguration
             {
                 Alias = "BLEazy",
-                Appearance = 128,
-                ServiceUUIDs = new List<string>
-                {
-                    "12345678-1234-5678-1234-56789abcdef0"
-                }
+                Appearance = 128
             };
 
             return configuration;

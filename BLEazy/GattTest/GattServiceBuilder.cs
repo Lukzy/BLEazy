@@ -11,14 +11,8 @@ namespace BLEazy.GattTest
 
         public GattServiceDescription ServiceDescription { get; }
 
-        public void WithCharacteristic(GattCharacteristicDescription gattCharacteristicDescription,
-            GattDescriptorDescription[] gattDescriptorDescriptions)
+        public void WithCharacteristic(GattCharacteristicDescription gattCharacteristicDescription)
         {
-            foreach (var description in gattDescriptorDescriptions)
-            {
-                gattCharacteristicDescription.AddDescriptor(description);
-            }
-
             ServiceDescription.AddCharacteristic(gattCharacteristicDescription);
         }
     }

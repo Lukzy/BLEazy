@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BLEazy.BlueZ.Advertising;
+﻿using BLEazy.BlueZ.Advertising;
 using BLEazy.Core;
 
 namespace BLEazy.Advertising
@@ -13,7 +12,7 @@ namespace BLEazy.Advertising
                 Type = "peripheral",
                 LocalName = context.Configuration.Alias,
                 Appearance = context.Configuration.Appearance,
-                ServiceUUIDs = context.Configuration.ServiceUUIDs.ToArray()
+                ServiceUUIDs = context.Configuration.GetServiceUUIDs()
             };
 
             var advertisement = new LEAdvertisement("/org/bluez/advertisement0", advertisementProperties);
